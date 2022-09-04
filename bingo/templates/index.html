@@ -1,0 +1,16 @@
+{% extends "generic/base_generic.html" %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+{% block content %}
+  <h1>Let's Bingo</h1>
+  <p>Welcome to the <em>Bingo World</em>!</p>
+  <h2>Dynamic content</h2>
+  <p>Current Game Stats:</p>
+  <ul>
+    <li><strong>Games:</strong> {{ num_games }}</li>
+    <li><strong>Leagues:</strong> {{ num_leagues }}</li>
+    <li><strong>Number of Users:</strong> {{ num_users }}</li>
+  </ul>
+{% endblock %}
