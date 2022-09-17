@@ -18,5 +18,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('bingo/v1/', include('bingo.urls'))
+    path('bingo/v1/', include('bingo.urls')),
+    path('bingo/accounts/', include('django.contrib.auth.urls')),
+
 ]

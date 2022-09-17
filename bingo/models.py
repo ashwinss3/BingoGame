@@ -1,8 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.urls import reverse
+from django.contrib.auth.models import AbstractUser
 
 
-# Create your models here.
+class User(AbstractUser):
+    pass
+
 
 class BaseModel(models.Model):
     class Meta:
@@ -22,6 +25,11 @@ class Game(BaseModel):
     end_time = models.DateTimeField()
     size = models.PositiveSmallIntegerField(default=5, choices=SIZE_CHOICES)
 
+    def get_absolute_url(self):
+        """Returns the URL to access a particular instance of MyModelName."""
+        return reverse('game-detail', args=[str(self.id)])
+
+
 
 class Options(BaseModel):
     id = models.AutoField(primary_key=True)
@@ -35,6 +43,11 @@ class League(BaseModel):
     name = models.TextField()
     games = models.ManyToManyField(Game)
 
+    def get_absolute_url(self):
+        """Returns the URL to access a particular instance of MyModelName."""
+        return reverse('league-detail', args=[str(self.id)])
+
+
 
 class UserGame(BaseModel):
     id = models.AutoField(primary_key=True)
@@ -45,7 +58,7 @@ class UserGame(BaseModel):
 
 class UserChoices(BaseModel):
     class Meta:
-        db_table = 'user_choices'
+        db_table = 'bingo_user_choices'
         constraints = [
             models.UniqueConstraint(fields=['choice', 'user_game'], name='unique choices')
         ]
@@ -58,9 +71,13 @@ class UserChoices(BaseModel):
 
 class LeagueStandings(BaseModel):
     id = models.AutoField(primary_key=True)
-    league = models.ForeignKey(League, on_delete=models.PROTECT)
+    league = models.OneToOneField(League, on_delete=models.PROTECT)
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     score = models.PositiveSmallIntegerField(default=0)
     position = models.PositiveIntegerField(default=0)
     prev_position = models.PositiveIntegerField(default=0)
+
+    def get_absolute_url(self):
+        """Returns the URL to access a particular instance of MyModelName."""
+        return reverse('league-standings', args=[str(self.id)])
 

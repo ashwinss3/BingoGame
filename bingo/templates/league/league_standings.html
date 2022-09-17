@@ -1,0 +1,16 @@
+{% extends "generic/base_generic.html" %}
+
+{% block content %}
+  <h1>League Standing</h1>
+  {% if leaguestandings_list %}
+  <ul>
+    {% for standing in leaguestandings_list %}
+      <li>
+        <a href="">{{ standing.user.first_name }}</a>  {{ standing.score }}
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>Oops. There are no leagues active now.</p>
+  {% endif %}
+{% endblock %}

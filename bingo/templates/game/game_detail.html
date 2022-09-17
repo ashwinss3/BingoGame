@@ -1,0 +1,20 @@
+{% extends "generic/base_generic.html" %}
+
+{% block content %}
+    <h1>Name: {{ game.name }}</h1>
+
+    <p><strong>Size:</strong> {{ game.size }}</p>
+    <p><strong>End Time:</strong> {{ game.end_time }}</p>
+    <p><strong>View League:</strong> <a href="">{{ game.league }}</a></p> <!-- author detail link not yet defined -->
+
+
+    <div style="margin-left:20px;margin-top:20px">
+        <h4>Options</h4>
+
+        {% for option in game.options_set.all %}
+            <hr>
+            <p><strong>Name:</strong> {{ option.name }}</p>
+            <p class="text-muted"><strong>Is Done:</strong> {{ option.is_done }}</p>
+        {% endfor %}
+    </div>
+{% endblock %}

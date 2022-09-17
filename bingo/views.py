@@ -1,12 +1,42 @@
 from django.shortcuts import render
 from bingo.forms.game import GameForm
 from django.http import HttpResponseRedirect
+from bingo.models import Game, LeagueStandings, League
+
+from django.views import generic
+
+
+class GameListView(generic.ListView):
+    model = Game
+    template_name = 'game/game_list.html'
+    paginate_by = 10
+
+
+class GameDetailView(generic.DetailView):
+    model = Game
+    template_name = 'game/game_detail.html'
+
+
+class LeagueListView(generic.ListView):
+    model = League
+    template_name = 'league/league_list.html'
+    paginate_by = 10
+
+
+class LeagueStandinglView(generic.ListView):
+    model = LeagueStandings
+    template_name = 'league/league_standings.html'
+    paginate_by = 10
+
+
+    def get_queryset(self):
+        return LeagueStandings.objects.filter(league_id=self.kwargs['league_id'])
 
 
 def index(request):
     """View function for home page of site."""
 
-    # Generate counts of some of the main objects
+    # Generate counts of some main objects
 
     context = {
         'num_games': 10,
