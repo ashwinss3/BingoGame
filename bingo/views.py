@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from bingo.forms.game import GameForm
 from django.http import HttpResponseRedirect
-from bingo.models import Game, LeagueStandings, League
+from bingo.models import Game, LeagueStandings, League, UserGame
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.views import generic
 
@@ -17,7 +18,7 @@ class GameDetailView(generic.DetailView):
     template_name = 'game/game_detail.html'
 
 
-class LeagueListView(generic.ListView):
+class LeagueListView(LoginRequiredMixin, generic.ListView):
     model = League
     template_name = 'league/league_list.html'
     paginate_by = 10
@@ -28,9 +29,25 @@ class LeagueStandinglView(generic.ListView):
     template_name = 'league/league_standings.html'
     paginate_by = 10
 
-
     def get_queryset(self):
         return LeagueStandings.objects.filter(league_id=self.kwargs['league_id'])
+
+
+class UserGameListView(LoginRequiredMixin, generic.ListView):
+    model = UserGame
+    template_name = 'game/user_game_list.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return UserGame.objects.filter(user=self.request.user).order_by('-created_at')
+
+
+class UserGameDetailView(LoginRequiredMixin, generic.DetailView):
+    model = UserGame
+    template_name = 'game/user_game_detail.html'
+
+    def get_queryset(self):
+        return UserGame.objects.filter(user=self.request.user).order_by('-created_at')
 
 
 def index(request):

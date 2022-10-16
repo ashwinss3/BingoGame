@@ -1,0 +1,16 @@
+{% extends "generic/base_generic.html" %}
+
+{% block content %}
+  <h1>Your Games</h1>
+  {% if usergame_list %}
+  <ul>
+    {% for user_game in usergame_list %}
+      <li>
+        <a href="{{ user_game.get_absolute_url }}">{{ user_game.game.name }}</a> Score: {{ user_game.score }}
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>Oops. No games. Create a New one.</p>
+  {% endif %}
+{% endblock %}

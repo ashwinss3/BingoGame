@@ -127,3 +127,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'bingo.User'
 
 LOGIN_REDIRECT_URL = '/bingo/v1/'
+LOGIN_URL = '/bingo/accounts/login/'
