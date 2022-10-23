@@ -1,13 +1,33 @@
 from django import forms
-from bingo.models import Game
+from django.forms import BaseInlineFormSet
+
+from bingo.models import Game, UserGameChoices, GameOptions
+
+
+class UserGameBaseFormset(BaseInlineFormSet):
+    def clean(self):
+        if any(self.errors):
+            # Don't bother validating the formset unless each form is valid on its own
+            return
+
+        # todo: add validations here to make sure positions and choices are unique and correct.
+
+
+class UserGameChoicesForm(forms.ModelForm):
+    # todo: Not being used probably. Can be deleted later.
+
+    class Meta:
+        model = UserGameChoices
+        fields = ('choice', 'position')
+
+    def __init__(self, *args, **kwargs):
+        self.game_id = kwargs.pop('game_id')
+        self.user_game_id = kwargs.pop('user_game_id')
+        super().__init__(*args, **kwargs)
+        self.fields['choice'].queryset = GameOptions.objects.filter(game_id=self.game_id)
 
 
 class GameForm(forms.ModelForm):
-    # name = forms.CharField(max_length=128, help_text="Please enter the game name.")
-    # end_time = forms.DateTimeField(help_text="Please enter the game end time.")
-    # size = forms.IntegerField(widget=forms.Select(choices=Game.SIZE_CHOICES),
-    #                           initial=5,
-    #                           help_text="Please enter size.")
 
     class Meta:
         model = Game

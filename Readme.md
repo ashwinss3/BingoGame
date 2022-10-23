@@ -22,3 +22,18 @@ Models:
 7. UserChoices - TO store choice of user for a game
 
 Choices can be stored in a single array.Calculation can be done based by using formula based on positions
+
+
+Sep 18:
+
+Added user, Game List page, Game Details page, 
+League List page, League Standings page,
+
+Added login/logout, etc.
+
+Need to add login restrictions for endpoints.
+
+
+TODOs :
+
+USer Game Page

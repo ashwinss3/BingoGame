@@ -41,7 +41,7 @@ class Game(BaseModel):
 
 
 
-class Options(BaseModel):
+class GameOptions(BaseModel):
     class Meta:
         db_table = 'game_options'
 
@@ -49,6 +49,10 @@ class Options(BaseModel):
     name = models.TextField()
     is_done = models.BooleanField(default=False)
     game = models.ForeignKey(Game, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.name
+
 
 
 class League(BaseModel):
@@ -67,6 +71,10 @@ class League(BaseModel):
 class UserGame(BaseModel):
     class Meta:
         db_table = 'user_game'
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'game'], name='one user_game per user')
+        ]
+
 
     id = models.AutoField(primary_key=True)
     game = models.ForeignKey(Game, on_delete=models.PROTECT)
@@ -79,9 +87,9 @@ class UserGame(BaseModel):
 
 
 
-class UserChoices(BaseModel):
+class UserGameChoices(BaseModel):
     class Meta:
-        db_table = 'user_choices'
+        db_table = 'user_game_choices'
         constraints = [
             models.UniqueConstraint(fields=['choice', 'user_game'], name='unique choices')
         ]
@@ -89,7 +97,7 @@ class UserChoices(BaseModel):
     id = models.AutoField(primary_key=True)
     user_game = models.ForeignKey(UserGame, on_delete=models.PROTECT)
     position = models.PositiveSmallIntegerField(default=0)
-    choice = models.ForeignKey(Options, on_delete=models.PROTECT)
+    choice = models.ForeignKey(GameOptions, on_delete=models.PROTECT)
 
 
 class LeagueStandings(BaseModel):
