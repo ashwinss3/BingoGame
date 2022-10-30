@@ -1,14 +1,25 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import inlineformset_factory
+from django.urls import reverse_lazy
 from django.views import generic
-from django.views.generic.edit import CreateView
 
 from bingo.forms.game import GameForm, UserGameBaseFormset
+from bingo.forms.registration import UserSignupForm
 from bingo.models import Game, LeagueStandings, League, UserGame, UserGameChoices
 from bingo.utils import utils
+
+from django.views.generic.edit import CreateView
+
+
+class SignUpView(SuccessMessageMixin, CreateView):
+    template_name = 'registration/signup.html'
+    success_url = reverse_lazy('login')
+    form_class = UserSignupForm
+    success_message = "Your profile was created successfully"
 
 
 class GameListView(generic.ListView):
@@ -16,7 +27,6 @@ class GameListView(generic.ListView):
     template_name = 'game/game_list.html'
     paginate_by = 10
     ordering = ['-created_at']
-
 
 
 class GameDetailView(generic.DetailView):
@@ -31,7 +41,7 @@ class LeagueListView(LoginRequiredMixin, generic.ListView):
     ordering = ['-created_at']
 
 
-class LeagueStandinglView(generic.ListView):
+class LeagueStandingView(generic.ListView):
     model = LeagueStandings
     template_name = 'league/league_standings.html'
     paginate_by = 10
@@ -64,8 +74,6 @@ class UserGameCreate(CreateView):
     template_name = 'user_game/user_game_create.html'
 
 
-
-
 def index(request):
     """View function for home page of site."""
 
@@ -87,7 +95,6 @@ def manage_user_game(request, game_id):
                                         min_num=game_size, max_num=game_size, validate_max=True,
                                         validate_min=True, formset=UserGameBaseFormset, can_delete=False, edit_only=False)
     saved = False
-
 
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
