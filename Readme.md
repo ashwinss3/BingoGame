@@ -37,3 +37,9 @@ Need to add login restrictions for endpoints.
 TODOs :
 
 USer Game Page
+
+Todo: 
+
+Add game week standing.
+
+Add league standings.

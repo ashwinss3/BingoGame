@@ -8,11 +8,15 @@ from django.views.generic.edit import CreateView
 
 from bingo.forms.game import GameForm, UserGameBaseFormset
 from bingo.models import Game, LeagueStandings, League, UserGame, UserGameChoices
+from bingo.utils import utils
+
 
 class GameListView(generic.ListView):
     model = Game
     template_name = 'game/game_list.html'
     paginate_by = 10
+    ordering = ['-created_at']
+
 
 
 class GameDetailView(generic.DetailView):
@@ -24,12 +28,14 @@ class LeagueListView(LoginRequiredMixin, generic.ListView):
     model = League
     template_name = 'league/league_list.html'
     paginate_by = 10
+    ordering = ['-created_at']
 
 
 class LeagueStandinglView(generic.ListView):
     model = LeagueStandings
     template_name = 'league/league_standings.html'
     paginate_by = 10
+    ordering = ['-created_at']
 
     def get_queryset(self):
         return LeagueStandings.objects.filter(league_id=self.kwargs['league_id'])
@@ -59,15 +65,14 @@ class UserGameCreate(CreateView):
 
 
 
+
 def index(request):
     """View function for home page of site."""
 
     # Generate counts of some main objects
-
+    active_games = utils.get_active_games()
     context = {
-        'num_games': 10,
-        'num_leagues': 5,
-        'num_users': 3,
+        'active_games': active_games
     }
 
     # Render the HTML template index.html with the data in the context variable
@@ -80,7 +85,7 @@ def manage_user_game(request, game_id):
 
     UserFormSet = inlineformset_factory(UserGame, UserGameChoices, fields=['position', 'choice'],
                                         min_num=game_size, max_num=game_size, validate_max=True,
-                                        validate_min=True, formset=UserGameBaseFormset, can_delete=False)
+                                        validate_min=True, formset=UserGameBaseFormset, can_delete=False, edit_only=False)
     saved = False
 
 

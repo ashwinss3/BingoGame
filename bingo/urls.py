@@ -11,6 +11,6 @@ urlpatterns = [
     path('league-standing/<int:league_id>', views.LeagueStandinglView.as_view(), name='league-standings'),
     path('my-games/', views.UserGameListView.as_view(), name='user-games'),
     path('my-game/<int:pk>', views.UserGameDetailView.as_view(), name='user-game-detail'),
-    path('my-game/<int:game_id>/create/', views.manage_user_game, name='user-game-create'),
+    path('my-game/<int:game_id>/manage/', views.manage_user_game, name='user-game-manage'),
 
 ]

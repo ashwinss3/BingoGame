@@ -39,6 +39,10 @@ class Game(BaseModel):
         """Returns the URL to access a particular instance of MyModelName."""
         return reverse('game-detail', args=[str(self.id)])
 
+    def user_game_url(self):
+        """Returns URL to set the UserGame associated with current game"""
+        return reverse('user-game-manage', args=[str(self.id)])
+
 
 
 class GameOptions(BaseModel):
@@ -83,7 +87,7 @@ class UserGame(BaseModel):
 
     def get_absolute_url(self):
         """Returns the URL to access a particular instance of MyModelName."""
-        return reverse('user-game-detail', args=[str(self.id)])
+        return reverse('user-game-manage', args=[str(self.game_id)])
 
 
 
@@ -106,7 +110,7 @@ class LeagueStandings(BaseModel):
 
     id = models.AutoField(primary_key=True)
     league = models.OneToOneField(League, on_delete=models.PROTECT)
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    user_name = models.ForeignKey(User, on_delete=models.PROTECT, to_field='username')
     score = models.PositiveSmallIntegerField(default=0)
     position = models.PositiveIntegerField(default=0)
     prev_position = models.PositiveIntegerField(default=0)
