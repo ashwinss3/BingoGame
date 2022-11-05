@@ -1,3 +1,9 @@
+body {
+    background: #A8D0E6;
+}
+
+/* SIDEBAR START */
+
 .sidenav {
     height:100%;
     width:160px;
@@ -21,6 +27,8 @@
 .sidenav a:hover{
     color:#f1f1f1;
 }
+/* SIDEBAR END */
+
 
 .main{
     margin-left:160px;
@@ -28,16 +36,17 @@
 }
 
 
+
 /*LIST GROUP START*/
 
 .list-group a {
     color: white;
-    background-color: mediumblue;
+    background-color: #374785;
 }
 
 .list-group a:hover {
     color: #818181;
-    background-color: darkblue;
+    background-color: #24305E;
 }
 
 
