@@ -26,3 +26,20 @@
     margin-left:160px;
     padding: 0px 10px;
 }
+
+
+/*LIST GROUP START*/
+
+.list-group a {
+    color: white;
+    background-color: mediumblue;
+}
+
+.list-group a:hover {
+    color: #818181;
+    background-color: darkblue;
+}
+
+
+/*LIST GROUP END*/
+

@@ -4,21 +4,26 @@
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
 {% block content %}
-  <h1>Let's Bingo !</h1>
+    <h1>Let's Bingo !</h1>
     <p>Welcome to the <em>Bingo World</em> !</p>
     <h2>Active Games</h2>
     {% if active_games %}
-        <ul>
+
+        <div class="list-group">
             {% for game in active_games %}
-                <li>
-                    <a href="{{ game.user_game_url }}">{{ game.name }}</a> (Deadline: {{ game.end_time }})
-                </li>
+
+                <a href="{{ game.user_game_url }}" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ game.name }}</h5>
+                    </div>
+                    <p class="mb-1">Deadline: {{ game.end_time }}</p>
+                </a>
+
             {% endfor %}
-        </ul>
+        </div>
     {% else %}
         <p>No Active Games. </p>
     {% endif %}
-
-    See <a href="{% url 'user-games' %}">Previous Games</a>
-
+{#    BELOW TO SHOW PREVIOUS GAMES  #}
+{#    <a class="btn btn-primary" href="{% url 'user-games' %}" role="button">Previous Games</a>#}
 {% endblock %}
