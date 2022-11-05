@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import BaseInlineFormSet
 
+from bingo import config
 from bingo.models import Game, UserGameChoices, GameOptions
 
 
@@ -18,14 +19,21 @@ class UserGameChoicesForm(forms.ModelForm):
 
     class Meta:
         model = UserGameChoices
-        fields = ('choice', 'position')
+        fields = '__all__'
+        exclude = ('user_game', 'deleted_at')
 
     def __init__(self, *args, **kwargs):
         self.game_id = kwargs.pop('game_id')
-        self.user_game_id = kwargs.pop('user_game_id')
+        self.game_size = kwargs.pop('game_size', 25)
         super().__init__(*args, **kwargs)
-        self.fields['choice'].queryset = GameOptions.objects.filter(game_id=self.game_id)
-
+        extra_positions = config.MAX_GAME_SIZE - self.game_size
+        # deleting any extra fields. Since we have 25 fields by default
+        for i in range(extra_positions):
+            self.fields.pop(f'pos{config.MAX_GAME_SIZE-i}')
+        game_choices = GameOptions.objects.filter(game_id=self.game_id)
+        for num in range(1, self.game_size+1):
+            # updating queryset for all position
+            self.fields[f'pos{num}'].queryset = game_choices
 
 class GameForm(forms.ModelForm):
 

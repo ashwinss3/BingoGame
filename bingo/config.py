@@ -1,0 +1,1 @@
+MAX_GAME_SIZE = 25

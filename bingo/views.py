@@ -3,13 +3,12 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.forms import inlineformset_factory
 from django.urls import reverse_lazy
 from django.views import generic
 
-from bingo.forms.game import GameForm, UserGameBaseFormset
+from bingo.forms.game import GameForm, UserGameChoicesForm
 from bingo.forms.registration import UserSignupForm
-from bingo.models import Game, LeagueStandings, League, UserGame, UserGameChoices
+from bingo.models import Game, LeagueStandings, League, UserGame
 from bingo.utils import utils
 
 from django.views.generic.edit import CreateView
@@ -91,30 +90,27 @@ def manage_user_game(request, game_id):
     user_game, created = UserGame.objects.get_or_create(user=request.user, game_id=game_id)
     game_size = user_game.game.size * user_game.game.size
 
-    UserFormSet = inlineformset_factory(UserGame, UserGameChoices, fields=['position', 'choice'],
-                                        min_num=game_size, max_num=game_size, validate_max=True,
-                                        validate_min=True, formset=UserGameBaseFormset, can_delete=False, edit_only=False)
     saved = False
 
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        formset = UserFormSet(request.POST, instance=user_game)
+        user_game_form = UserGameChoicesForm(request.POST, instance=user_game, game_id=user_game.game_id, game_size=game_size)
 
         # check whether it's valid:
-        if formset.is_valid():
-            print(formset.data)
-            formset.save()
+        if user_game_form.is_valid():
+            print(user_game_form.data)
+            user_game_form.save()
             saved = True
             # uncomment below to redirect to any other page. (redirect to user game detail maybe ?)
             # return HttpResponseRedirect('/thanks/')
 
     else:
-        formset = UserFormSet(initial=[{'position': pos+1} for pos in range(game_size)],
-                              instance=user_game)
+        user_game_form = UserGameChoicesForm(request.POST, instance=user_game, game_id=user_game.game_id, game_size=game_size)
+
 
     context = {
-        'formset': formset,
+        'form': user_game_form,
         'saved': saved
     }
 
