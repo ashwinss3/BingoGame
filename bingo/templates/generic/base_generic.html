@@ -12,7 +12,7 @@
 </head>
 <body>
 {% block sidebar %}
-    <div class="sidebar">
+    <div class="sidebar" id="mainSidebar">
         <a href="{% url 'index' %}">Home</a>
         <a href="{% url 'games' %}">All Games</a>
         <a href="{% url 'leagues' %}">All Leagues</a>
@@ -31,6 +31,7 @@
     </div>
 {% endblock %}
 <div id="content" name="content" class="main">
+    <button class="open-button" onclick="toggleNav()"><b>&#9776;</b></button>
     <div class="row justify-content-center">
         <div class="col-8">
             {% block content %}{% endblock %}
@@ -60,6 +61,21 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script>
+    {#    TODO: Try to use something like toggleClass('active'), and set width for active/non-active#}
+    {#    refer https://bootstrapious.com/p/bootstrap-sidebar#sidebar-1 #}
+    function toggleNav() {
+        if (getComputedStyle(document.getElementById("mainSidebar")).width == "0px" || getComputedStyle(document.getElementById("mainSidebar")).width == 0){
+            document.getElementById("mainSidebar").style.width = "200px";
+            document.getElementById("content").style.marginLeft = "200px";
+        }
+        else {
+            document.getElementById("mainSidebar").style.width = "0px";
+            document.getElementById("content").style.marginLeft= "0px";
+        }
+    }
+
+</script>
 
 </body>
 </html>

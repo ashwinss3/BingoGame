@@ -6,7 +6,7 @@ body {
 
 .sidebar {
     height:100%;
-    width:160px;
+    width:200px;
     position: fixed;
     z-index:1;
     top:0;
@@ -14,6 +14,7 @@ body {
     background-color:#111;
     overflow-x: hidden;
     padding-top:20px;
+    transition: 0.5s;
 }
 
 .sidebar a {
@@ -27,11 +28,34 @@ body {
 .sidebar a:hover{
     color:#f1f1f1;
 }
+
+/* The button used to open the sidebar */
+.open-button {
+    font-size: 25px;
+    cursor: pointer;
+    background-color: #A8D0E6;
+    color: black;
+    padding: 10px 15px;
+    border: none;
+}
+
+.open-button:hover {
+    color: grey;
+}
+
+@media screen and (max-height: 450px) {
+    /* Making the sidebar hidden by default for mobiles */
+    .sidebar {padding-top: 15px;width: 0}
+    .sidebar a {font-size: 18px;}
+    .content {margin-left: 0}
+}
+
 /* SIDEBAR END */
 
 
 .main{
-    margin-left:160px;
+    transition: margin-left .5s;
+    margin-left: 200px;
     padding: 0px 10px;
 }
 
@@ -56,29 +80,29 @@ body {
 /* BINGO CARD START */
 
 .bingo-card {
-  background: #f7d75c;
-  padding: 20px;
-  display: grid;
-  grid-gap: 4px;
+    background: #f7d75c;
+    padding: 20px;
+    display: grid;
+    grid-gap: 4px;
     justify-content: center;
     max-height: 600px;
 
-  text-transform: uppercase;
+    text-transform: uppercase;
     aspect-ratio: 1;
 
 }
 
 .bingo-card__item {
-  background: #f9f59e;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-  position: relative;
-  cursor: pointer;
-  font-size: 12px;
-  line-height: 1.35;
-  user-select: none;
+    background: #f9f59e;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 1.35;
+    user-select: none;
 }
 
 /*.bingo-card__item:after {*/
@@ -120,45 +144,45 @@ body {
 /*}*/
 
 .clear-button {
-  margin: 2em 0 0;
-  font: 700 16px "Nunito", sans-serif;
-  text-transform: uppercase;
-  cursor: pointer;
-  display: inline-block;
-  border: 2px dotted;
-  color: #fdb90b;
-  padding: 8px 10px;
+    margin: 2em 0 0;
+    font: 700 16px "Nunito", sans-serif;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: inline-block;
+    border: 2px dotted;
+    color: #fdb90b;
+    padding: 8px 10px;
 }
 .clear-button:hover {
-  color: #f2ae00;
+    color: #f2ae00;
 }
 
 
- /*title used in bingo */
+/*title used in bingo */
 /*TODO: Title needs to updated*/
 .title {
-  background: #fdb90b;
-  color: #fff;
-  padding: 30px 10px;
-  grid-column: span 5;
-  text-align: center;
-  font: 72px/0.9 "Amatic SC", cursive;
-        max-width: 600px;
+    background: #fdb90b;
+    color: #fff;
+    padding: 30px 10px;
+    grid-column: span 5;
+    text-align: center;
+    font: 72px/0.9 "Amatic SC", cursive;
+    max-width: 600px;
 
 }
 .title span {
-  display: none;
+    display: none;
 }
 .title span:nth-child(1) {
-  display: block;
+    display: block;
 }
 @media screen and (max-width: 600px) {
-  .title span:nth-child(1) {
-    display: none;
-  }
-  .title span:nth-child(2) {
-    display: block;
-  }
+    .title span:nth-child(1) {
+        display: none;
+    }
+    .title span:nth-child(2) {
+        display: block;
+    }
 }
 
 
