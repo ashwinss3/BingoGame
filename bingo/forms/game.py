@@ -34,6 +34,7 @@ class UserGameChoicesForm(forms.ModelForm):
         for num in range(1, self.game_size+1):
             # updating queryset for all position
             self.fields[f'pos{num}'].queryset = game_choices
+            self.fields[f'pos{num}'].widget.attrs['class'] = 'bingo-card__item'
 
 class GameForm(forms.ModelForm):
 

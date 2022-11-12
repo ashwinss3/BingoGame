@@ -111,6 +111,7 @@ def manage_user_game(request, game_id):
 
     context = {
         'form': user_game_form,
+        'game_size': user_game.game.size,
         'saved': saved
     }
 

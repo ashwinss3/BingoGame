@@ -4,7 +4,7 @@ body {
 
 /* SIDEBAR START */
 
-.sidenav {
+.sidebar {
     height:100%;
     width:160px;
     position: fixed;
@@ -16,7 +16,7 @@ body {
     padding-top:20px;
 }
 
-.sidenav a {
+.sidebar a {
     padding:6px 8px 6px 16px;
     text-decoration: none;
     font-size:25px;
@@ -24,7 +24,7 @@ body {
     display:block;
 }
 
-.sidenav a:hover{
+.sidebar a:hover{
     color:#f1f1f1;
 }
 /* SIDEBAR END */
@@ -51,4 +51,116 @@ body {
 
 
 /*LIST GROUP END*/
+
+
+/* BINGO CARD START */
+
+.bingo-card {
+  background: #f7d75c;
+  padding: 20px;
+  display: grid;
+  grid-gap: 4px;
+    justify-content: center;
+    max-height: 600px;
+
+  text-transform: uppercase;
+    aspect-ratio: 1;
+
+}
+
+.bingo-card__item {
+  background: #f9f59e;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1.35;
+  user-select: none;
+}
+
+/*.bingo-card__item:after {*/
+/*  content: "-";*/
+/*  position: absolute;*/
+/*  top: -28%;*/
+/*  left: -30%;*/
+/*  color: #fbda7d;*/
+/*  width: 100%;*/
+/*  opacity: 0;*/
+/*  transition: 0.1s ease;*/
+/*  height: 0;*/
+/*  pointer-events: none;*/
+/*  font: 280px/0.5 "Caveat Brush", cursive;*/
+/*  text-align: center;*/
+/*  transform: rotate(-45deg);*/
+/*}*/
+
+/*.bingo-card__item.active:after {*/
+/*  height: 100%;*/
+/*  opacity: 0.7;*/
+/*}*/
+
+/*.bingo-card__item {*/
+/*  padding: 15px;*/
+/*}*/
+
+/*.bingo-card__item.active .bingo-card__checkbox:before {*/
+/*  content: "✔";*/
+/*  position: absolute;*/
+/*  color: black;*/
+/*  left: 0;*/
+/*  top: -19px;*/
+/*  color: #fdb90b;*/
+/*  font: 30px "Caveat Brush", cursive;*/
+/*}*/
+/*.bingo-card__checkbox {*/
+/*  display: none;*/
+/*}*/
+
+.clear-button {
+  margin: 2em 0 0;
+  font: 700 16px "Nunito", sans-serif;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-block;
+  border: 2px dotted;
+  color: #fdb90b;
+  padding: 8px 10px;
+}
+.clear-button:hover {
+  color: #f2ae00;
+}
+
+
+ /*title used in bingo */
+/*TODO: Title needs to updated*/
+.title {
+  background: #fdb90b;
+  color: #fff;
+  padding: 30px 10px;
+  grid-column: span 5;
+  text-align: center;
+  font: 72px/0.9 "Amatic SC", cursive;
+        max-width: 600px;
+
+}
+.title span {
+  display: none;
+}
+.title span:nth-child(1) {
+  display: block;
+}
+@media screen and (max-width: 600px) {
+  .title span:nth-child(1) {
+    display: none;
+  }
+  .title span:nth-child(2) {
+    display: block;
+  }
+}
+
+
+/* BINGO CARD END */
 
