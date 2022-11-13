@@ -7,25 +7,26 @@
     <form action="" method="post">
         {% csrf_token %}
         <div class="title">
-{#            TODO: Need to change title here#}
+            {#            TODO: Need to change title here#}
             <span>BINGOOOOO</span>
             <span>BINGO</span>
         </div>
-
+        <div class="errors">
+            {{ form.non_field_errors }}
+        </div>
         <div class="bingo-card" style="grid-template-columns: repeat({{ game_size }}, minmax(0,150px)); grid-template-rows: repeat({{ game_size }}, minmax(0,150px))">
             {% for field in form %}
-                {#                {{ field.errors }}#}
-                {#                {{ field.label_tag }}#}
+                {#                                {{ field.errors }}#}
+                {#                                {{ field.label_tag }}#}
                 {{ field }}
                 {% if field.help_text %}
                     <p class="help">{{ field.help_text|safe }}</p>
                 {% endif %}
             {% endfor %}
+
         </div>
-        <div class="container my-3">
-            <div class="col-md-12 text-center">
-                <input class="btn btn-primary" type="submit" value="Submit">
-            </div>
+        <div style="padding: 10px">
+            <input class="btn btn-primary  btn-lg" type="submit" value="Save">
         </div>
 
     </form>

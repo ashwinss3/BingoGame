@@ -2,6 +2,18 @@ body {
     background: #A8D0E6;
 }
 
+
+.main{
+    transition: margin-left .5s;
+    margin-left: 200px;
+    padding: 0px 10px;
+}
+
+.center {
+    margin: 0 auto;
+    width: 80%;
+}
+
 /* SIDEBAR START */
 
 .sidebar {
@@ -43,22 +55,14 @@ body {
     color: grey;
 }
 
-@media screen and (max-height: 450px) {
+@media screen and (max-width: 600px) {
     /* Making the sidebar hidden by default for mobiles */
     .sidebar {padding-top: 15px;width: 0}
     .sidebar a {font-size: 18px;}
-    .content {margin-left: 0}
+    .main {margin-left: 0}
 }
 
 /* SIDEBAR END */
-
-
-.main{
-    transition: margin-left .5s;
-    margin-left: 200px;
-    padding: 0px 10px;
-}
-
 
 
 /*LIST GROUP START*/
@@ -103,6 +107,24 @@ body {
     font-size: 12px;
     line-height: 1.35;
     user-select: none;
+}
+
+.bingo-card__item__error {
+    background: #f9f59e;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 1.35;
+    user-select: none;
+    border: thick solid darkred;
+}
+
+.errors {
+    color: darkred;
 }
 
 /*.bingo-card__item:after {*/
