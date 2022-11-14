@@ -3,7 +3,6 @@
 An FPL BINGO Game
 
 
-
 Steps:
 1. Create a Django Server with a Static HTML
 2. Create a PAGE where Admin can create a BINGO GAME and add options.
