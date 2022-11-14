@@ -25,7 +25,8 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'c4#@ip@hf^pzfvewlp338m-m1&^(r_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['bingo.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://bingo.up.railway.app']
 
 
 # Application definition
