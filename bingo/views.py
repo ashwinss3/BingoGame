@@ -8,7 +8,7 @@ from django.views import generic
 
 from bingo.forms.game import GameForm, UserGameChoicesForm
 from bingo.forms.registration import UserSignupForm
-from bingo.models import Game, LeagueStandings, League, UserGame
+from bingo.models import Game, LeagueStandings, League, UserGame, UserGameChoices
 from bingo.utils import utils
 
 from django.views.generic.edit import CreateView
@@ -89,28 +89,30 @@ def index(request):
 def manage_user_game(request, game_id):
     user_game, created = UserGame.objects.get_or_create(user=request.user, game_id=game_id)
     game_size = user_game.game.size * user_game.game.size
+    user_game_choice, c_created = UserGameChoices.objects.get_or_create(user_game=user_game)
 
     saved = False
 
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        user_game_form = UserGameChoicesForm(request.POST, instance=user_game, game_id=user_game.game_id, game_size=game_size)
+        user_game_form = UserGameChoicesForm(request.POST, instance=user_game_choice, game_id=user_game.game_id, game_size=game_size)
 
         # check whether it's valid:
         if user_game_form.is_valid():
-            print(user_game_form.data)
-            user_game_form.save()
+            # print(user_game_form.data)
+            user_game_form.save(commit=True)
             saved = True
             # uncomment below to redirect to any other page. (redirect to user game detail maybe ?)
             # return HttpResponseRedirect('/thanks/')
 
     else:
-        user_game_form = UserGameChoicesForm(request.POST, instance=user_game, game_id=user_game.game_id, game_size=game_size)
+        user_game_form = UserGameChoicesForm(instance=user_game_choice, game_id=user_game.game_id, game_size=game_size)
 
 
     context = {
         'form': user_game_form,
+        'game_size': user_game.game.size,
         'saved': saved
     }
 

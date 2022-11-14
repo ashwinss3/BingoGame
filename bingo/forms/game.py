@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.forms import BaseInlineFormSet
 
 from bingo import config
@@ -34,6 +35,25 @@ class UserGameChoicesForm(forms.ModelForm):
         for num in range(1, self.game_size+1):
             # updating queryset for all position
             self.fields[f'pos{num}'].queryset = game_choices
+            self.fields[f'pos{num}'].widget.attrs['class'] = 'bingo-card__item'
+
+    def clean(self):
+        super().clean()
+        field_counts = {}
+        for num in range(1, self.game_size + 1):
+            option = self.cleaned_data[f'pos{num}']
+            field_counts[option] = field_counts.get(option, 0) + 1
+
+        # filtering out to keep only ones with count > 1
+        field_counts = {key: value for key, value in field_counts.items() if value > 1}
+
+        if field_counts:
+            for field, value in self.cleaned_data.items():
+                if value in field_counts:
+                    self.fields[field].widget.attrs['class'] = 'bingo-card__item__error'
+
+            raise ValidationError("Same option selected for more than one field")
+
 
 class GameForm(forms.ModelForm):
 
