@@ -124,7 +124,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'bingo.User'
 
-LOGIN_REDIRECT_URL = '/v1/'
+LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/accounts/login/'
 
 # Update database configuration from $DATABASE_URL.
