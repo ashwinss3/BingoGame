@@ -18,8 +18,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('bingo/v1/', include('bingo.urls')),
-    path("bingo/accounts/", include("bingo.urls")),  # signup is added here
-    path('bingo/accounts/', include('django.contrib.auth.urls')),
+    path("accounts/", include("bingo.urls")),  # signup is added here
+    path('', include('bingo.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 
 ]

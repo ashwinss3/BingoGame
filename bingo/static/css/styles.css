@@ -84,7 +84,7 @@ body {
 /* BINGO CARD START */
 
 .bingo-card {
-    background: #f7d75c;
+    background: #e6dda8;
     padding: 20px;
     display: grid;
     grid-gap: 4px;
@@ -97,7 +97,7 @@ body {
 }
 
 .bingo-card__item {
-    background: #f9f59e;
+    background: #f1ecd0;
     display: flex;
     align-items: center;
     text-align: center;
@@ -107,6 +107,7 @@ body {
     font-size: 12px;
     line-height: 1.35;
     user-select: none;
+    border: none;
 }
 
 .bingo-card__item__error {
@@ -183,7 +184,7 @@ body {
 /*title used in bingo */
 /*TODO: Title needs to updated*/
 .title {
-    background: #fdb90b;
+    background: #e6a8b1;
     color: #fff;
     padding: 30px 10px;
     grid-column: span 5;

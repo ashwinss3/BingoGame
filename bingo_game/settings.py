@@ -25,8 +25,8 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'c4#@ip@hf^pzfvewlp338m-m1&^(r_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['bingo.up.railway.app']
-CSRF_TRUSTED_ORIGINS = ['https://bingo.up.railway.app']
+ALLOWED_HOSTS = ['bingo.up.railway.app', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://bingo.up.railway.app', 'http://127.0.0.1']
 
 
 # Application definition
@@ -124,8 +124,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'bingo.User'
 
-LOGIN_REDIRECT_URL = '/bingo/v1/'
-LOGIN_URL = '/bingo/accounts/login/'
+LOGIN_REDIRECT_URL = '/v1/'
+LOGIN_URL = '/accounts/login/'
 
 # Update database configuration from $DATABASE_URL.
 import dj_database_url
