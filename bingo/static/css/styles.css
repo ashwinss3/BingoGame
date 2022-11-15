@@ -104,28 +104,42 @@ body {
     justify-content: center;
     position: relative;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1.35;
     user-select: none;
     border: none;
+    word-wrap: break-word;
+    white-space: normal;
+    /* For Firefox: */
+    text-overflow: ellipsis;
 }
 
 .bingo-card__item__error {
-    background: #f9f59e;
+    background: #f1ecd0;
     display: flex;
     align-items: center;
     text-align: center;
     justify-content: center;
     position: relative;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1.35;
     user-select: none;
     border: thick solid darkred;
+    word-wrap: break-word;
+    white-space: normal;
+    /* For Firefox: */
+    text-overflow: ellipsis;
+
 }
 
 .errors {
     color: darkred;
+}
+
+@media screen and (max-width: 600px) {
+    .bingo-card__item { font-size: 11px }
+    .bingo-card__item__error { font-size: 11px }
 }
 
 /*.bingo-card__item:after {*/
