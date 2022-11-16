@@ -116,7 +116,8 @@ def manage_user_game(request, game_id):
         'game_size': user_game.game.size,
         'saved': saved,
         'game_options': game_options,
-        'game_name': user_game.game.name
+        'game_name': user_game.game.name,
+        'is_active': user_game.game.is_active
     }
 
     return render(request, 'user_game/user_game_create.html', context)

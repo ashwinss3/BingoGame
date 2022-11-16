@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from django.db import models
 from django.urls import reverse
@@ -33,7 +33,7 @@ class Game(BaseModel):
     @property
     def is_active(self):
         """Determine is game is active or not"""
-        return bool(self.end_time and datetime.now() > self.end_time)
+        return bool(self.end_time and datetime.now(timezone.utc) < self.end_time)
 
     def get_absolute_url(self):
         """Returns the URL to access a particular instance of MyModelName."""

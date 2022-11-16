@@ -38,6 +38,9 @@ class UserGameChoicesForm(forms.ModelForm):
             self.fields[f'pos{num}'].widget.attrs['class'] = 'bingo-card__item'
 
     def clean(self):
+        game = Game.objects.get(id=self.game_id)
+        if not game.is_active:
+            raise ValidationError('Game Deadline Crossed')
         super().clean()
         field_counts = {}
         for num in range(1, self.game_size + 1):

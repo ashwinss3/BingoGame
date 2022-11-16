@@ -135,6 +135,7 @@ body {
 
 .errors {
     color: darkred;
+    font-size: larger;
 }
 
 @media screen and (max-width: 600px) {
