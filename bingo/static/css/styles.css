@@ -225,3 +225,38 @@ body {
 
 /* BINGO CARD END */
 
+
+/* BINGO GAME OPTIONS START*/
+
+.scroll-box {
+    height:550px;
+    overflow-y: scroll;
+    width: 100%;
+
+}
+
+
+.col-sm-12 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+
+}
+
+.col-sm-12 form {
+    width: 100%;
+    justify-content: center;
+}
+
+@media screen and (max-width: 600px) {
+    .col-sm-12 {
+        display: block;
+        padding: 3%;
+    }
+    .scroll-box {
+        height:350px;
+    }
+
+}
+/* BINGO GAME OPTIONS END */

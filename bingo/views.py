@@ -8,7 +8,7 @@ from django.views import generic
 
 from bingo.forms.game import GameForm, UserGameChoicesForm
 from bingo.forms.registration import UserSignupForm
-from bingo.models import Game, LeagueStandings, League, UserGame, UserGameChoices
+from bingo.models import Game, LeagueStandings, League, UserGame, UserGameChoices, GameOptions
 from bingo.utils import utils
 
 from django.views.generic.edit import CreateView
@@ -109,11 +109,14 @@ def manage_user_game(request, game_id):
     else:
         user_game_form = UserGameChoicesForm(instance=user_game_choice, game_id=user_game.game_id, game_size=game_size)
 
+    game_options = GameOptions.objects.filter(game=user_game.game)
 
     context = {
         'form': user_game_form,
         'game_size': user_game.game.size,
-        'saved': saved
+        'saved': saved,
+        'game_options': game_options,
+        'game_name': user_game.game.name
     }
 
     return render(request, 'user_game/user_game_create.html', context)

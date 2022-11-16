@@ -51,6 +51,9 @@ class GameOptions(BaseModel):
 
     id = models.AutoField(primary_key=True)
     name = models.TextField()
+    short_description = models.TextField()
+    description = models.TextField()
+    condition = models.TextField()
     is_done = models.BooleanField(default=False)
     game = models.ForeignKey(Game, on_delete=models.PROTECT)
 

@@ -1,33 +1,49 @@
 {% extends "generic/base_generic.html" %}
 
-{% block content %}
-    {% if saved %}
-        <p><b>Saved Successfully !!</b></p>
-    {% endif %}
-    <form action="" method="post">
-        {% csrf_token %}
-        <div class="title">
-            {#            TODO: Need to change title here#}
-            <span>BINGO</span>
-            <span>BINGO</span>
-        </div>
-        <div class="errors">
-            {{ form.non_field_errors }}
-        </div>
-        <div class="bingo-card" style="grid-template-columns: repeat({{ game_size }}, minmax(0,150px)); grid-template-rows: repeat({{ game_size }}, minmax(0,150px))">
-            {% for field in form %}
-                {#                                {{ field.errors }}#}
-                {#                                {{ field.label_tag }}#}
-                {{ field }}
-                {% if field.help_text %}
-                    <p class="help">{{ field.help_text|safe }}</p>
-                {% endif %}
+{% block colcontent %}
+    <div class="col-sm-12">
+        {% if saved %}
+            <p><b>Saved Successfully !!</b></p>
+        {% endif %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="title">
+                {#            TODO: Need to change title here#}
+                <span>{{ game_name }}</span>
+                <span>{{ game_name }}</span>
+            </div>
+            <div class="errors">
+                {{ form.non_field_errors }}
+            </div>
+            <div class="bingo-card" style="grid-template-columns: repeat({{ game_size }}, minmax(0,150px)); grid-template-rows: repeat({{ game_size }}, minmax(0,150px))">
+                {% for field in form %}
+                    {#                                {{ field.errors }}#}
+                    {#                                {{ field.label_tag }}#}
+                    {{ field }}
+                    {% if field.help_text %}
+                        <p class="help">{{ field.help_text|safe }}</p>
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+            <div style="padding: 10px">
+                <input class="btn btn-primary  btn-lg" type="submit" value="Save">
+            </div>
+
+        </form>
+        {# SHOWING THE OPTIONS BELOW  #}
+
+        <div class="scroll-box list-group">
+            <h2> OPTIONS EXPLAINED</h2>
+            {% for option in game_options %}
+                <a href="#" class="list-group-item list-group-item-action" aria-current="true" style="background-color: #e6dda8; color: #111111">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ option.name }}</h5>
+                    </div>
+                    <p class="mb-1">{{ option.description }}</p>
+                    <small>{{ option.condition }}</small>
+                </a>
             {% endfor %}
-
         </div>
-        <div style="padding: 10px">
-            <input class="btn btn-primary  btn-lg" type="submit" value="Save">
-        </div>
-
-    </form>
+    </div>
 {% endblock %}
