@@ -1,16 +1,20 @@
 {% extends "generic/base_generic.html" %}
 
 {% block content %}
-  <h1>Leagues</h1>
-  {% if league_list %}
-  <ul>
-    {% for league in league_list %}
-      <li>
-        <a href="{{ league.leaguestandings.get_absolute_url }}">{{ league.name }}</a>
-      </li>
-    {% endfor %}
-  </ul>
-  {% else %}
-    <p>Oops. There are no leagues active now.</p>
-  {% endif %}
+    <h1>Leagues</h1>
+    {% if league_list %}
+        <div class="list-group">
+
+            {% for league in league_list %}
+                <a href="{{ league.get_standings_url }}" class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ league.name }}</h5>
+                    </div>
+                </a>
+
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Oops. There are no leagues active now.</p>
+    {% endif %}
 {% endblock %}

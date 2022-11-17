@@ -74,6 +74,11 @@ class League(BaseModel):
         """Returns the URL to access a particular instance of MyModelName."""
         return reverse('league-detail', args=[str(self.id)])
 
+    def get_standings_url(self):
+        """Returns the URL to access a particular instance of MyModelName."""
+        return reverse('league-standings', args=[str(self.id)])
+
+
 
 class UserGame(BaseModel):
     class Meta:
@@ -130,9 +135,12 @@ class UserGameChoices(BaseModel):
 class LeagueStandings(BaseModel):
     class Meta:
         db_table = 'league_standings'
+        constraints = [
+            models.UniqueConstraint(fields=['league', 'user_name'], name='unique user entry per league')
+        ]
 
     id = models.AutoField(primary_key=True)
-    league = models.OneToOneField(League, on_delete=models.PROTECT)
+    league = models.ForeignKey(League, on_delete=models.PROTECT)
     user_name = models.ForeignKey(User, on_delete=models.PROTECT, to_field='username')
     score = models.PositiveSmallIntegerField(default=0)
     position = models.PositiveIntegerField(default=0)

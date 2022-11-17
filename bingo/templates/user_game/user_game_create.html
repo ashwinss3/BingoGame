@@ -2,10 +2,11 @@
 
 {% block colcontent %}
     <div class="col-sm-12">
-        {% if saved %}
-            <p><b>Saved Successfully !!</b></p>
-        {% endif %}
         <form action="" method="post">
+            {% if saved %}
+                <p><b>Saved Successfully !!</b></p>
+            {% endif %}
+
             {% csrf_token %}
             <div class="errors">
                 {{ form.non_field_errors }}
@@ -27,11 +28,11 @@
                 {% endfor %}
 
             </div>
-        {% if is_active %}
-            <div style="padding: 10px">
-                <input class="btn btn-primary  btn-lg" type="submit" value="Save">
-            </div>
-        {% endif %}
+            {% if is_active %}
+                <div style="padding: 10px">
+                    <input class="btn btn-primary  btn-lg" type="submit" value="Save">
+                </div>
+            {% endif %}
 
         </form>
         {# SHOWING THE OPTIONS BELOW  #}
@@ -39,7 +40,7 @@
         <div class="scroll-box list-group">
             <h2> OPTIONS DETAILED <small><small>(Click to Select)</small></small></h2>
             {% for option in game_options %}
-                <a href="#" class="list-group-item list-group-item-action" aria-current="true" style="background-color: #e6dda8; color: #111111" onclick="selectOption({{ option.id }});">
+                <a href="javascript:void(0)" class="list-group-item list-group-item-action" aria-current="true" style="background-color: #e6dda8; color: #111111" onclick="selectOption({{ option.id }});">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">{{ option.name }}</h5>
                     </div>
@@ -52,17 +53,18 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
-    function selectOption(opt_id) {
-        {# todo: set the positions dynamically  #}
-        const positions = ['id_pos1', 'id_pos2', 'id_pos3', 'id_pos4', 'id_pos5', 'id_pos6', 'id_pos7', 'id_pos8', 'id_pos9', 'id_pos10', 'id_pos11', 'id_pos12', 'id_pos13', 'id_pos14', 'id_pos15', 'id_pos16', 'id_pos17', 'id_pos18', 'id_pos19', 'id_pos20', 'id_pos21', 'id_pos22', 'id_pos23', 'id_pos24', 'id_pos25'];
-        for (const pos of positions) {
-            console.log(pos)
-            if (!document.getElementById(pos).value) {
-                document.getElementById(pos).value = opt_id
+    <script>
+        function selectOption(opt_id) {
+            {# todo: set the positions dynamically  #}
+            const positions = ['id_pos1', 'id_pos2', 'id_pos3', 'id_pos4', 'id_pos5', 'id_pos6', 'id_pos7', 'id_pos8', 'id_pos9', 'id_pos10', 'id_pos11', 'id_pos12', 'id_pos13', 'id_pos14', 'id_pos15', 'id_pos16', 'id_pos17', 'id_pos18', 'id_pos19', 'id_pos20', 'id_pos21', 'id_pos22', 'id_pos23', 'id_pos24', 'id_pos25'];
+            for (const pos of positions) {
+                console.log(pos)
+                if (!document.getElementById(pos).value) {
+                    document.getElementById(pos).value = opt_id
+                    break;
+                }
             }
         }
-    }
 
-</script>
+    </script>
 {% endblock %}
