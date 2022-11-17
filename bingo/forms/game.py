@@ -6,17 +6,7 @@ from bingo import config
 from bingo.models import Game, UserGameChoices, GameOptions
 
 
-class UserGameBaseFormset(BaseInlineFormSet):
-    def clean(self):
-        if any(self.errors):
-            # Don't bother validating the formset unless each form is valid on its own
-            return
-
-        # todo: add validations here to make sure positions and choices are unique and correct.
-
-
 class UserGameChoicesForm(forms.ModelForm):
-    # todo: Not being used probably. Can be deleted later.
 
     class Meta:
         model = UserGameChoices
