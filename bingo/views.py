@@ -85,6 +85,14 @@ def index(request):
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
 
+
+def how_to_play(request):
+    """View function for home page of site."""
+
+    # Render the HTML template index.html with the data in the context variable
+    return render(request, 'how_to_play.html')
+
+
 @login_required
 def manage_user_game(request, game_id):
     user_game, ug_created = UserGame.objects.get_or_create(user=request.user, game_id=game_id)
@@ -148,4 +156,8 @@ def game(request):
     return render(request, 'game/game.html', context)
 
 
+def test(request):
+    """View function for home page of site."""
 
+    # Render the HTML template index.html with the data in the context variable
+    return render(request, 'test.html')

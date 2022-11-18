@@ -42,3 +42,39 @@ Todo:
 Add game week standing.
 
 Add league standings.
+
+
+
+TODOS:
+
+Optimize Django DB Queries
+
+if possible in dropdown show unselected options in green and selcted one in red
+
+gmail login
+
+
+
+Add how to play and scoring system. (link in homescreen)
+
+
+Auto join user in the main leage if the form submitted is correct
+
+debug as false
+
+
+
+Use PL apps color - i.e purple
+
+Reset password flow
+
+Check CSS for Sign up page
+
+Test login on mobile, faced csrf issue
+
+Host postgres
+
+
+Post game deadline, dont allow to save, and dont allow to change choices in UI as well
+
+Create a countdown 
