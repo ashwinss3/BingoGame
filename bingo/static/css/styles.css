@@ -138,6 +138,10 @@ body {
     font-size: larger;
 }
 
+.errorlist {
+    color: darkred;
+}
+
 @media screen and (max-width: 600px) {
     .bingo-card__item { font-size: 11px }
     .bingo-card__item__error { font-size: 11px }
