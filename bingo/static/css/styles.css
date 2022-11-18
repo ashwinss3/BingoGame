@@ -77,6 +77,14 @@ body {
     background-color: #24305E;
 }
 
+.list-group a.list-group-item {
+    background-color: #e6dda8;
+    color: #111111;
+}
+
+.list-group a.list-group-item.added {
+    background-color: #a2965c;
+}
 
 /*LIST GROUP END*/
 
