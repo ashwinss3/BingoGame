@@ -1,3 +1,5 @@
+import traceback
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render
@@ -95,43 +97,49 @@ def how_to_play(request):
 
 @login_required
 def manage_user_game(request, game_id):
-    user_game, ug_created = UserGame.objects.get_or_create(user=request.user, game_id=game_id)
-    game_size = user_game.game.size * user_game.game.size
-    user_game_choice, c_created = UserGameChoices.objects.get_or_create(user_game=user_game)
+    try:
 
-    saved = False
+        user_game, ug_created = UserGame.objects.get_or_create(user=request.user, game_id=game_id)
+        game_size = user_game.game.size * user_game.game.size
+        user_game_choice, c_created = UserGameChoices.objects.get_or_create(user_game=user_game)
 
-    # if this is a POST request we need to process the form data
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        user_game_form = UserGameChoicesForm(request.POST, instance=user_game_choice, game_id=user_game.game_id, game_size=game_size)
+        saved = False
 
-        # check whether it's valid:
-        if user_game_form.is_valid():
-            # print(user_game_form.data)
-            user_game_form.save(commit=True)
-            saved = True
-            # TODO: temporary. Allow users to join the league they want.
-            for league in League.objects.all():
-                LeagueStandings.objects.get_or_create(league=league, user_name=request.user.username)
-            # uncomment below to redirect to any other page. (redirect to user game detail maybe ?)
-            # return HttpResponseRedirect('/thanks/')
+        # if this is a POST request we need to process the form data
+        if request.method == 'POST':
+            # create a form instance and populate it with data from the request:
+            user_game_form = UserGameChoicesForm(request.POST, instance=user_game_choice, game_id=user_game.game_id, game_size=game_size)
 
-    else:
-        user_game_form = UserGameChoicesForm(instance=user_game_choice, game_id=user_game.game_id, game_size=game_size)
+            # check whether it's valid:
+            if user_game_form.is_valid():
+                # print(user_game_form.data)
+                user_game_form.save(commit=True)
+                saved = True
+                # TODO: temporary. Allow users to join the league they want.
+                for league in League.objects.all():
+                    LeagueStandings.objects.get_or_create(league=league, user_name=request.user.username)
+                # uncomment below to redirect to any other page. (redirect to user game detail maybe ?)
+                # return HttpResponseRedirect('/thanks/')
 
-    game_options = GameOptions.objects.filter(game=user_game.game)
+        else:
+            user_game_form = UserGameChoicesForm(instance=user_game_choice, game_id=user_game.game_id, game_size=game_size)
 
-    context = {
-        'form': user_game_form,
-        'game_size': user_game.game.size,
-        'saved': saved,
-        'game_options': game_options,
-        'game_name': user_game.game.name,
-        'is_active': user_game.game.is_active
-    }
+        game_options = GameOptions.objects.filter(game=user_game.game).exclude(name='FREE SPACE')
 
-    return render(request, 'user_game/user_game_create.html', context)
+        context = {
+            'form': user_game_form,
+            'game_size': user_game.game.size,
+            'saved': saved,
+            'game_options': game_options,
+            'game_name': user_game.game.name,
+            'is_active': user_game.game.is_active
+        }
+
+        return render(request, 'user_game/user_game_create.html', context)
+    except Exception as ex:
+        traceback.print_exc()
+        return HttpResponseRedirect('/')
+
 
 
 def game(request):
