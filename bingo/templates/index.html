@@ -6,14 +6,14 @@
 {% block content %}
     <div class="col">
         <h1 class="mt-2">Let's <s>Bingo</s> !</h1>
-{#        <p>What happens at Bingo, <em>stays at Bingo </em> !</p>#}
+        {#        <p>What happens at Bingo, <em>stays at Bingo </em> !</p>#}
 
         <hr class="mb-0 mb-4">
     </div>
     <h2>Active Games</h2>
 
-    <div class="list-group">
-        {% if active_games %}
+    {% if active_games %}
+        <div class="list-group">
 
             {% for game in active_games %}
 
@@ -25,13 +25,17 @@
                 </a>
 
             {% endfor %}
-        {% else %}
-            <p>No Active Games.<br/></p>
-            <a class="btn btn-primary" href="{% url 'user-games' %}" role="button">Previous Games</a>
+        </div>
 
-        {% endif %}
+    {% else %}
+        <p>No Active Games.<br/></p>
+        <a class="btn btn-primary" href="{% url 'user-games' %}" role="button">Previous Games</a>
 
-    </div>
+    {% endif %}
+
+    <hr class="mb-0 mb-4">
+    <a href="{% url 'how_to_play' %}">How to Play</a>
+
     <hr class="mb-0 mb-4">
 
     {#    BELOW TO SHOW PREVIOUS GAMES  #}

@@ -29,6 +29,8 @@
             <a href="{% url 'login'%}?next={{request.path}}">Login</a>
             <a href="{% url 'signup'%}?next={{request.path}}">Sign Up</a>
         {% endif %}
+        <a href="{% url 'how_to_play' %}">Game Rules</a>
+
 
     </div>
 {% endblock %}

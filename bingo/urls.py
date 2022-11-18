@@ -3,6 +3,8 @@ from django.urls import path
 from bingo import views
 
 urlpatterns = [
+
+    path('test/', views.test, name="test"),
     path('', views.index, name="index"),
     path('how-to-play/', views.how_to_play, name="how_to_play"),
     path('game/', views.game, name="game"),
