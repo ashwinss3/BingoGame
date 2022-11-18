@@ -26,11 +26,10 @@ class UserGameChoicesForm(forms.ModelForm):
             # updating queryset for all position
             self.fields[f'pos{num}'].widget.attrs['class'] = 'bingo-card__item'
             if num == (int(self.game_size/2)+1):
-                free_choice = GameOptions.objects.filter(name='FREE SPACE').first()
-                if free_choice:
-                    self.initial[f'pos{num}'] = free_choice
-                    self.fields[f'pos{num}'].queryset = GameOptions.objects.filter(name='FREE SPACE')
-                    # self.fields[f'pos{num}'].widget.attrs['disabled'] = True
+                free_choice_filter = GameOptions.objects.filter(name='FREE SPACE')
+                if free_choice_filter.first():
+                    self.initial[f'pos{num}'] = free_choice_filter.first()
+                    self.fields[f'pos{num}'].queryset = free_choice_filter
                 else:
                     self.fields[f'pos{num}'].queryset = game_choices
             else:
