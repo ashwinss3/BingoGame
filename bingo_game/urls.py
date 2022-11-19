@@ -20,6 +20,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("accounts/", include("bingo.urls")),  # signup is added here
     path('', include('bingo.urls')),
+    path('accounts/', include('allauth.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
 
 ]

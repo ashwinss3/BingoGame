@@ -1,0 +1,49 @@
+{% extends "generic/base_generic.html" %}
+
+{% block content %}
+
+  {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+  {% endif %}
+
+  {% if redirect_field_name %}
+      <p ><h3 style="color: darkred">Please login to see this page.</h3></p>
+{#    {% if user.is_authenticated %}#}
+{#      <p>Your account doesn't have access to this page. To proceed,#}
+{#      please login with an account that has access.</p>#}
+{#    {% else %}#}
+{#      <p>Please login to see this page.</p>#}
+{#    {% endif %}#}
+  {% endif %}
+
+
+
+<h1>Sign In</h1>
+
+<div class="socialaccount_ballot">
+
+  <ul class="socialaccount_providers">
+
+<li>
+  <a title="Google" class="socialaccount_provider google" href="/accounts/google/login/?process=login"> With Google</a>
+</li>
+
+  </ul>
+
+  <div class="login-or">OR</div>
+
+</div>
+
+<form class="login" method="POST" action="{% url 'login' %}">
+    {% csrf_token %}
+      {{ form.as_p }}
+
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+<input type="submit" value="login">
+</form>
+
+  <p><a href="{% url 'signup' %}">New User ? Sign Up</a></p>
+{% endblock %}

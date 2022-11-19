@@ -51,9 +51,9 @@ class GameOptions(BaseModel):
 
     id = models.AutoField(primary_key=True)
     name = models.TextField()
-    short_description = models.TextField()
-    description = models.TextField()
-    condition = models.TextField()
+    short_description = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    condition = models.TextField(null=True, blank=True)
     is_done = models.BooleanField(default=False)
     game = models.ForeignKey(Game, on_delete=models.PROTECT)
 
@@ -141,7 +141,8 @@ class LeagueStandings(BaseModel):
 
     id = models.AutoField(primary_key=True)
     league = models.ForeignKey(League, on_delete=models.PROTECT)
-    user_name = models.ForeignKey(User, on_delete=models.PROTECT, to_field='username')
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    user_name = models.TextField(null=True, blank=True)
     score = models.PositiveSmallIntegerField(default=0)
     position = models.PositiveIntegerField(default=0)
     prev_position = models.PositiveIntegerField(default=0)
