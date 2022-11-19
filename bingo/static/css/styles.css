@@ -77,9 +77,13 @@ body {
     background-color: #24305E;
 }
 
-.list-group a.list-group-item {
+.list-group a.list-group-item.game-option {
     background-color: #e6dda8;
     color: #111111;
+}
+
+.list-group a.list-group-item.game-option:hover {
+    background-color: #c2b980;
 }
 
 .list-group a.list-group-item.added {
