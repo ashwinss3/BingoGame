@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn bingo_game.wsgi
+web: python manage.py migrate && python manage.py collectstatic && gunicorn bingo_game.wsgi
