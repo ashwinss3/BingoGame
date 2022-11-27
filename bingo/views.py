@@ -100,7 +100,6 @@ def manage_user_game(request, game_id):
     try:
 
         user_game, ug_created = UserGame.objects.get_or_create(user=request.user, game_id=game_id)
-        game_size = user_game.game.size * user_game.game.size
         user_game_choice, c_created = UserGameChoices.objects.get_or_create(user_game=user_game)
 
         saved = False
@@ -108,7 +107,7 @@ def manage_user_game(request, game_id):
         # if this is a POST request we need to process the form data
         if request.method == 'POST':
             # create a form instance and populate it with data from the request:
-            user_game_form = UserGameChoicesForm(request.POST, instance=user_game_choice, game_id=user_game.game_id, game_size=game_size)
+            user_game_form = UserGameChoicesForm(request.POST, instance=user_game_choice, game=user_game.game)
 
             # check whether it's valid:
             if user_game_form.is_valid():
@@ -122,7 +121,7 @@ def manage_user_game(request, game_id):
                 # return HttpResponseRedirect('/thanks/')
 
         else:
-            user_game_form = UserGameChoicesForm(instance=user_game_choice, game_id=user_game.game_id, game_size=game_size)
+            user_game_form = UserGameChoicesForm(instance=user_game_choice, game=user_game.game)
 
         game_options = GameOptions.objects.filter(game=user_game.game).exclude(name='FREE SPACE')
 
