@@ -15,6 +15,8 @@ from bingo.utils import utils
 
 from django.views.generic.edit import CreateView
 
+from bingo.utils.utils import get_user_choices_list
+
 
 class SignUpView(SuccessMessageMixin, CreateView):
     template_name = 'registration/signup.html'
@@ -56,14 +58,6 @@ class UserGameListView(LoginRequiredMixin, generic.ListView):
     model = UserGame
     template_name = 'game/user_game_list.html'
     paginate_by = 10
-
-    def get_queryset(self):
-        return UserGame.objects.filter(user=self.request.user).order_by('-created_at')
-
-
-class UserGameDetailView(LoginRequiredMixin, generic.DetailView):
-    model = UserGame
-    template_name = 'game/user_game_detail.html'
 
     def get_queryset(self):
         return UserGame.objects.filter(user=self.request.user).order_by('-created_at')
@@ -139,6 +133,26 @@ def manage_user_game(request, game_id):
         traceback.print_exc()
         return HttpResponseRedirect('/')
 
+
+def view_user_game(request, game_id, user_id=None):
+    """
+    function to view the user game.
+    """
+
+    user_game = UserGame.objects.get(user=request.user, game_id=game_id)
+    user_game_choices = user_game.usergamechoices
+    game_size = user_game.game.size
+    game_name = user_game.game.name
+    game_options = GameOptions.objects.filter(game=user_game.game).order_by('-is_done')
+    user_choice_list = get_user_choices_list(user_game_choices, game_size)
+
+    context = {
+        'game_size': game_size,
+        'game_name': game_name,
+        'user_choice_list': user_choice_list,
+        'game_options': game_options
+    }
+    return render(request, 'game/user_game_detail.html', context=context)
 
 
 def game(request):

@@ -41,8 +41,10 @@ class Game(BaseModel):
 
     def user_game_url(self):
         """Returns URL to set the UserGame associated with current game"""
-        return reverse('user-game-manage', args=[str(self.id)])
-
+        if self.is_active:
+            return reverse('user-game-manage', args=[str(self.id)])
+        else:
+            return reverse('user-game-view', args=[str(self.id)])
 
 
 class GameOptions(BaseModel):
@@ -54,6 +56,7 @@ class GameOptions(BaseModel):
     short_description = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     condition = models.TextField(null=True, blank=True)
+    remarks = models.TextField(null=True, blank=True)
     is_done = models.BooleanField(default=False)
     game = models.ForeignKey(Game, on_delete=models.PROTECT)
 
@@ -95,7 +98,10 @@ class UserGame(BaseModel):
 
     def get_absolute_url(self):
         """Returns the URL to access a particular instance of MyModelName."""
-        return reverse('user-game-manage', args=[str(self.game_id)])
+        if self.game.is_active:
+            return reverse('user-game-manage', args=[str(self.game_id)])
+        else:
+            return reverse('user-game-view', args=[str(self.game_id)])
 
 
 class UserGameChoices(BaseModel):
@@ -136,7 +142,7 @@ class LeagueStandings(BaseModel):
     class Meta:
         db_table = 'league_standings'
         constraints = [
-            models.UniqueConstraint(fields=['league', 'user_name'], name='unique user entry per league')
+            models.UniqueConstraint(fields=['league', 'user'], name='unique user entry per league')
         ]
 
     id = models.AutoField(primary_key=True)
