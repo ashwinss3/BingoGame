@@ -82,7 +82,7 @@ body {
     color: #111111;
 }
 
-.list-group a.list-group-item.game-option.is_done {
+.list-group a.list-group-item.game-option.is-done {
     /*background-color: #00a923;*/
     background-color: #036e1c;
     color: #111111;
@@ -176,7 +176,7 @@ body {
   font: 130px/0.5 "Arial", cursive;
   text-align: center;
 }
-.bingo-card__item.is_done:after {
+.bingo-card__item.is-done:after {
   height: 80%;
   opacity: 0.8;
 }
@@ -194,7 +194,7 @@ body {
 @media screen and (max-width: 600px) {
     .bingo-card__item { font-size: 11px }
     .bingo-card__item__error { font-size: 11px }
-    .bingo-card__item.is_done:after {
+    .bingo-card__item.is-done:after {
         top: 25%;
         font: 80px/0.5 "Arial", cursive;
     }

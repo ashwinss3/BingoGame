@@ -10,7 +10,7 @@
             </div>
             <div class="bingo-card" style="grid-template-columns: repeat({{ game_size }}, minmax(0,150px)); grid-template-rows: repeat({{ game_size }}, minmax(0,150px))">
                 {% for choice in user_choice_list %}
-                    <div class="bingo-card__item {% if choice.is_done %} is_done {% endif %}"> {{ choice }}<span class="bingo-card__checkbox"></span></div>
+                    <div class="bingo-card__item {% if choice.is_done %} is-done {% endif %}"> {{ choice }}<span class="bingo-card__checkbox"></span></div>
                 {% endfor %}
             </div>
         </form>
@@ -20,7 +20,7 @@
         <div class="scroll-box list-group">
             <h2> OPTIONS DETAILED </h2>
             {% for option in game_options %}
-                <a href="#" class="list-group-item list-group-item-action game-option  {% if option.is_done %} is_done {% else %} not_done {% endif %} " aria-current="true">
+                <a href="#" class="list-group-item list-group-item-action game-option  {% if option.is_done %} is-done {% else %} not_done {% endif %} " aria-current="true">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">{{ option.name }}</h5>
                     </div>
