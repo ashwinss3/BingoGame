@@ -5,7 +5,7 @@
     {% if leaguestandings_list %}
         <div class="list-group">
             {% for standing in leaguestandings_list %}
-                <a href="{{ game.user_game_url }}" class="list-group-item list-group-item-action">
+                <a href="{% url 'user-game-view-other' game_id=last_game_id user_id=standing.user_id %}" class="list-group-item list-group-item-action">
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">{{ standing.user_name }}</h5>
                     </div>

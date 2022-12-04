@@ -82,6 +82,21 @@ body {
     color: #111111;
 }
 
+.list-group a.list-group-item.game-option.is-done {
+    /*background-color: #00a923;*/
+    background-color: #036e1c;
+    color: #111111;
+    /*color: white;*/
+    pointer-events: none;
+
+}
+
+.list-group a.list-group-item.game-option.not_done {
+    background-color: #737573;
+    color: #111111;
+    pointer-events: none;
+}
+
 .list-group a.list-group-item.game-option:hover {
     background-color: #c2b980;
 }
@@ -124,6 +139,7 @@ body {
     white-space: normal;
     /* For Firefox: */
     text-overflow: ellipsis;
+    overflow:hidden;
 }
 
 .bingo-card__item__error {
@@ -142,8 +158,29 @@ body {
     white-space: normal;
     /* For Firefox: */
     text-overflow: ellipsis;
+    overflow:hidden;
 
 }
+
+.bingo-card__item:after {
+  content: "✘";
+  position: absolute;
+  top: 20%;
+  left: 5%;
+  color: #fbda7d;
+  width: 80%;
+  opacity: 0;
+  transition: 0.1s ease;
+  height: 0;
+  pointer-events: none;
+  font: 130px/0.5 "Arial", cursive;
+  text-align: center;
+}
+.bingo-card__item.is-done:after {
+  height: 80%;
+  opacity: 0.8;
+}
+
 
 .errors {
     color: darkred;
@@ -157,28 +194,12 @@ body {
 @media screen and (max-width: 600px) {
     .bingo-card__item { font-size: 11px }
     .bingo-card__item__error { font-size: 11px }
+    .bingo-card__item.is-done:after {
+        top: 25%;
+        font: 80px/0.5 "Arial", cursive;
+    }
 }
 
-/*.bingo-card__item:after {*/
-/*  content: "-";*/
-/*  position: absolute;*/
-/*  top: -28%;*/
-/*  left: -30%;*/
-/*  color: #fbda7d;*/
-/*  width: 100%;*/
-/*  opacity: 0;*/
-/*  transition: 0.1s ease;*/
-/*  height: 0;*/
-/*  pointer-events: none;*/
-/*  font: 280px/0.5 "Caveat Brush", cursive;*/
-/*  text-align: center;*/
-/*  transform: rotate(-45deg);*/
-/*}*/
-
-/*.bingo-card__item.active:after {*/
-/*  height: 100%;*/
-/*  opacity: 0.7;*/
-/*}*/
 
 /*.bingo-card__item {*/
 /*  padding: 15px;*/
@@ -196,20 +217,6 @@ body {
 /*.bingo-card__checkbox {*/
 /*  display: none;*/
 /*}*/
-
-.clear-button {
-    margin: 2em 0 0;
-    font: 700 16px "Nunito", sans-serif;
-    text-transform: uppercase;
-    cursor: pointer;
-    display: inline-block;
-    border: 2px dotted;
-    color: #fdb90b;
-    padding: 8px 10px;
-}
-.clear-button:hover {
-    color: #f2ae00;
-}
 
 
 /*title used in bingo */

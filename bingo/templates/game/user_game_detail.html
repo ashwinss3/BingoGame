@@ -1,21 +1,44 @@
 {% extends "generic/base_generic.html" %}
 
-{% block content %}
-    <h1>User Game: {{ usergame.game.name }}</h1>
+{% block colcontent %}
 
-    <p><strong>Size:</strong> {{ usergame.game.size }}</p>
-    <p><strong>End Time:</strong> {{ usergame.game.end_time }}</p>
-    <p><strong>View League:</strong> <a href="">{{ usergame.game.league }}</a></p> <!-- author detail link not yet defined -->
+    <div class="col">
+        <h2 class="mt-2" style="padding-left: 3%;">Bingo Card: <a style="color: #264b5d">{{ user_name }}</a></h2>
 
+        <hr class="mb-0 mb-4">
+    </div>
 
-    <div style="margin-left:20px;margin-top:20px">
-        <h4>Your Choices</h4>
+    <div class="col-sm-12">
+        <form>
+            <p class="fs-2"> Score: <strong>{{ score }}</strong></p>
 
-        {% for choice in usergame.userchoices_set.all %}
-            <hr>
-            <p><strong>Name:</strong> {{ choice.choice.name }}</p>
-            <p><strong>Position:</strong> {{ choice.position }}</p>
-            <p class="text-muted"><strong>Is Done:</strong> {{ choice.choice.is_done }}</p>
-        {% endfor %}
+            <div class="title">
+                {# TODO: Need to change title here#}
+                <span>{{ game_name }}</span>
+                <span>{{ game_name }}</span>
+            </div>
+            <div class="bingo-card" style="grid-template-columns: repeat({{ game_size }}, minmax(0,150px)); grid-template-rows: repeat({{ game_size }}, minmax(0,150px))">
+                {% for choice in user_choice_list %}
+                    <div class="bingo-card__item {% if choice.is_done %} is-done {% endif %}"> {{ choice }}<span class="bingo-card__checkbox"></span></div>
+                {% endfor %}
+            </div>
+        </form>
+
+        {# SHOWING THE OPTIONS BELOW  #}
+
+        <div class="scroll-box list-group">
+            <h2> OPTIONS DETAILED </h2>
+            {% for option in game_options %}
+                <a href="#" class="list-group-item list-group-item-action game-option  {% if option.is_done %} is-done {% else %} not_done {% endif %} " aria-current="true">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ option.name }}</h5>
+                    </div>
+                    <p class="mb-1">{{ option.description }}</p>
+                    <small>{{ option.condition }}</small>
+                    <p class="mb-1" style="color: darkred"> {{ option.remarks }} </p>
+                </a>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
+

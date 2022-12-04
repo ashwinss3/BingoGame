@@ -14,14 +14,14 @@ class UserGameChoicesForm(forms.ModelForm):
         exclude = ('user_game', 'deleted_at')
 
     def __init__(self, *args, **kwargs):
-        self.game_id = kwargs.pop('game_id')
-        self.game_size = kwargs.pop('game_size', 25)
+        self.game = kwargs.pop('game')
+        self.game_size = self.game.size * self.game.size
         super().__init__(*args, **kwargs)
         extra_positions = config.MAX_GAME_SIZE - self.game_size
         # deleting any extra fields. Since we have 25 fields by default
         for i in range(extra_positions):
             self.fields.pop(f'pos{config.MAX_GAME_SIZE-i}')
-        game_choices = GameOptions.objects.filter(game_id=self.game_id).exclude(name='FREE SPACE')
+        game_choices = GameOptions.objects.filter(game=self.game).exclude(name='FREE SPACE')
         for num in range(1, self.game_size+1):
             # updating queryset for all position
             self.fields[f'pos{num}'].widget.attrs['class'] = 'bingo-card__item'
@@ -37,8 +37,7 @@ class UserGameChoicesForm(forms.ModelForm):
 
     def clean(self):
         super().clean()
-        game = Game.objects.get(id=self.game_id)
-        if not game.is_active:
+        if not self.game.is_active:
             raise ValidationError('Game Deadline Crossed')
 
         field_counts = {}
