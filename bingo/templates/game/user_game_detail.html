@@ -1,9 +1,16 @@
 {% extends "generic/base_generic.html" %}
 
 {% block colcontent %}
+
+    <div class="col">
+        <h2 class="mt-2" style="padding-left: 3%;">Bingo Card: <a style="color: #264b5d">{{ user_name }}</a></h2>
+
+        <hr class="mb-0 mb-4">
+    </div>
+
     <div class="col-sm-12">
         <form>
-                <p class="fs-2"> Score: <strong>{{ score }}</strong></p>
+            <p class="fs-2"> Score: <strong>{{ score }}</strong></p>
 
             <div class="title">
                 {# TODO: Need to change title here#}

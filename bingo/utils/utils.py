@@ -14,3 +14,8 @@ def get_user_choices_list(user_choices, game_size):
 
     return choices_array
 
+
+def validate_game_end(game_id):
+    from bingo.models import Game
+    if Game.objects.get(id=game_id).is_active:
+        raise PermissionError('Wait till game deadline :)')

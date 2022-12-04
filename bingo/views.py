@@ -6,16 +6,17 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views import generic
 
 from bingo.forms.game import GameForm, UserGameChoicesForm
 from bingo.forms.registration import UserSignupForm
-from bingo.models import Game, LeagueStandings, League, UserGame, UserGameChoices, GameOptions
+from bingo.models import Game, LeagueStandings, League, UserGame, UserGameChoices, GameOptions, User
 from bingo.utils import utils
 
 from django.views.generic.edit import CreateView
 
-from bingo.utils.utils import get_user_choices_list
+from bingo.utils.utils import get_user_choices_list, validate_game_end
 
 
 class SignUpView(SuccessMessageMixin, CreateView):
@@ -52,6 +53,11 @@ class LeagueStandingView(generic.ListView):
 
     def get_queryset(self):
         return LeagueStandings.objects.filter(league_id=self.kwargs['league_id'])
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['last_game_id'] = Game.objects.filter(end_time__lte=timezone.now()).order_by('-end_time').first().id
+        return context
 
 
 class UserGameListView(LoginRequiredMixin, generic.ListView):
@@ -138,8 +144,13 @@ def view_user_game(request, game_id, user_id=None):
     """
     function to view the user game.
     """
+    validate_game_end(game_id)
 
-    user_game = UserGame.objects.get(user=request.user, game_id=game_id)
+    if not user_id:
+        user_id = request.user.id
+
+    user_name = User.objects.get(id=user_id).username
+    user_game = UserGame.objects.get(user_id=user_id, game_id=game_id)
     user_game_choices = user_game.usergamechoices
     game_size = user_game.game.size
     game_name = user_game.game.name
@@ -147,6 +158,7 @@ def view_user_game(request, game_id, user_id=None):
     user_choice_list = get_user_choices_list(user_game_choices, game_size)
 
     context = {
+        'user_name': user_name,
         'game_size': game_size,
         'game_name': game_name,
         'score': user_game.score,
