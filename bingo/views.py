@@ -101,6 +101,7 @@ def how_to_play(request):
 @login_required
 def manage_user_game(request, game_id):
     try:
+        validate_game_end(game_id, deny_inactive=True)
 
         user_game, ug_created = UserGame.objects.get_or_create(user=request.user, game_id=game_id)
         user_game_choice, c_created = UserGameChoices.objects.get_or_create(user_game=user_game)
@@ -140,14 +141,14 @@ def manage_user_game(request, game_id):
         return render(request, 'user_game/user_game_create.html', context)
     except Exception as ex:
         traceback.print_exc()
-        return HttpResponseRedirect('/')
+        raise ex
 
 
 def view_user_game(request, game_id, user_id=None):
     """
     function to view the user game.
     """
-    validate_game_end(game_id)
+    validate_game_end(game_id, deny_active=True)
 
     if not user_id:
         user_id = request.user.id
