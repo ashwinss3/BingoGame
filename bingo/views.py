@@ -52,7 +52,7 @@ class LeagueStandingView(generic.ListView):
     ordering = ['-created_at']
 
     def get_queryset(self):
-        return LeagueStandings.objects.filter(league_id=self.kwargs['league_id'])
+        return LeagueStandings.objects.filter(league_id=self.kwargs['league_id']).order_by('-score')
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
