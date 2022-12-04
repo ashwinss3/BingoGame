@@ -56,6 +56,9 @@ class LeagueStandingView(generic.ListView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
+        # todo: check this later. Not using the league games field.
+        # context['last_game_id'] = League.objects.get(self.kwargs['league_id']).games.\
+        #     filter(end_time__lte=timezone.now()).order_by('-end_time').first().id
         context['last_game_id'] = Game.objects.filter(end_time__lte=timezone.now()).order_by('-end_time').first().id
         return context
 
