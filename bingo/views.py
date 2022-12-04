@@ -149,6 +149,7 @@ def view_user_game(request, game_id, user_id=None):
     context = {
         'game_size': game_size,
         'game_name': game_name,
+        'score': user_game.score,
         'user_choice_list': user_choice_list,
         'game_options': game_options
     }
