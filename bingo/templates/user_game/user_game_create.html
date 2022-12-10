@@ -95,4 +95,32 @@
         }
 
     </script>
+    <script>
+        $('select').on('focus', function(event) {
+            DisableOptions(event);
+        });
+
+        function DisableOptions(event) {
+            const list = [];
+
+            $.each($('select'), function() { //loop all select
+                if ($(this).val()) {
+                    list.push($(this).val())}
+            });
+            const current_element = event.target
+            for (let i = 0; i < current_element.options.length; i++) {
+                // If the option is already selected, marking it with a diff colour
+
+                if ((current_element.options[i].value !== current_element.value) &&
+                    jQuery.inArray(current_element.options[i].value, list) !== -1 )
+                {
+                    current_element.options[i].style.background = '#a2965c';
+                }
+                else {
+                    current_element.options[i].style.background = '#e6dda8';
+                }
+            }
+        }
+
+</script>
 {% endblock %}
