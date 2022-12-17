@@ -58,7 +58,7 @@
         function selectOption(option, opt_id) {
             {# Creating the ids for all positions #}
             let positions = [];
-            for (let pos = 1; pos <= {{ game_size }}; pos++) {
+            for (let pos = 1; pos <= {{ game_size }}*{{ game_size }}; pos++) {
                 positions.push(`id_pos${pos}`);
             }
 
