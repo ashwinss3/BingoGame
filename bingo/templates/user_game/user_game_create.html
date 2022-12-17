@@ -54,11 +54,15 @@
 
 {% block scripts %}
     <script>
+        {# function to select an option on click from Detailed Option list #}
         function selectOption(option, opt_id) {
-            {# todo: set the positions dynamically  #}
-            const positions = ['id_pos1', 'id_pos2', 'id_pos3', 'id_pos4', 'id_pos5', 'id_pos6', 'id_pos7', 'id_pos8', 'id_pos9', 'id_pos10', 'id_pos11', 'id_pos12', 'id_pos13', 'id_pos14', 'id_pos15', 'id_pos16', 'id_pos17', 'id_pos18', 'id_pos19', 'id_pos20', 'id_pos21', 'id_pos22', 'id_pos23', 'id_pos24', 'id_pos25'];
+            {# Creating the ids for all positions #}
+            let positions = [];
+            for (let pos = 1; pos <= {{ game_size }}; pos++) {
+                positions.push(`id_pos${pos}`);
+            }
+
             for (const pos of positions) {
-                console.log(pos)
                 if (!document.getElementById(pos).value) {
                     document.getElementById(pos).value = opt_id
                     option.classList.add('added')
