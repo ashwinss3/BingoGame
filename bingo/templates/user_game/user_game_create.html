@@ -11,9 +11,13 @@
             <div class="errors">
                 {{ form.non_field_errors }}
             </div>
+            <div class="add-on-buttons">
+                <button type="button" class="btn btn-primary randomize-button" onclick="fillRandomOption();"> Fill Random</button>
+                <button type="button" class="btn btn-primary clear-button" onclick="clearOptions();"> Clear</button>
+            </div>
 
             <div class="title">
-                {#            TODO: Need to change title here#}
+                {#            TODO: Need to change title here #}
                 <span>{{ game_name }}</span>
                 <span>{{ game_name }}</span>
             </div>
@@ -30,7 +34,7 @@
             </div>
             {% if is_active %}
                 <div style="padding: 10px">
-                    <input class="btn btn-primary  btn-lg" type="submit" value="Save">
+                    <input class="btn btn-primary btn-lg form-save-button" type="submit" value="Save">
                 </div>
             {% endif %}
 
@@ -125,6 +129,47 @@
                 }
             }
         }
+    </script>
+    <script>
 
-</script>
+        function fillRandomOption() {
+            let game_options = {{ game_option_ids|safe }};
+
+            // Iterate over each select field and select a random option
+            $('select').each(function() {
+                if ($(this).prop('options').length > 2) {
+                    // selecting a random option
+                    let index = Math.floor(Math.random() * game_options.length); // Generate a random index
+                    let option = game_options[index]; // Select the option at the index
+                    game_options.splice(index, 1); // Remove the option from the array
+
+                    // assigning the value
+                    $(this).val(option); // Set the value of the select field to the selected option
+                }
+                else {
+                    // will be called for FREE SPACE
+                    $(this).prop('selectedIndex', 1);
+                }
+            });
+
+            // after random selections marking the selections again in the details list.
+            MarkSelections();
+
+        }
+
+    </script>
+    <script>
+        function clearOptions() {
+            // clearing options from the bingo card
+            $('select').each(function () {
+                $(this).prop('selectedIndex', 0);
+            });
+
+            // clearing selections from the options list
+            $.each($('.list-group-item'), function () {
+                $(this).removeClass('added')
+            });
+        }
+
+    </script>
 {% endblock %}

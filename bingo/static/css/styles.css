@@ -121,6 +121,8 @@ body {
     text-transform: uppercase;
     aspect-ratio: 1;
 
+    margin: 0 auto;
+
 }
 
 .bingo-card__item {
@@ -163,22 +165,22 @@ body {
 }
 
 .bingo-card__item:after {
-  content: "✘";
-  position: absolute;
-  top: 20%;
-  left: 5%;
-  color: #fbda7d;
-  width: 80%;
-  opacity: 0;
-  transition: 0.1s ease;
-  height: 0;
-  pointer-events: none;
-  font: 130px/0.5 "Arial", cursive;
-  text-align: center;
+    content: "✘";
+    position: absolute;
+    top: 20%;
+    left: 5%;
+    color: #fbda7d;
+    width: 80%;
+    opacity: 0;
+    transition: 0.1s ease;
+    height: 0;
+    pointer-events: none;
+    font: 130px/0.5 "Arial", cursive;
+    text-align: center;
 }
 .bingo-card__item.is-done:after {
-  height: 80%;
-  opacity: 0.8;
+    height: 80%;
+    opacity: 0.8;
 }
 
 
@@ -229,6 +231,8 @@ body {
     text-align: center;
     font: 72px/0.9 "Amatic SC", cursive;
     max-width: 600px;
+
+    margin: 0 auto;
 
 }
 .title span {
@@ -284,3 +288,27 @@ body {
 
 }
 /* BINGO GAME OPTIONS END */
+
+/* USER GAME MANAGER BUTTONS START */
+
+.add-on-buttons {
+    overflow: auto;
+    padding: 2%;
+}
+
+.clear-button {
+    float: right;
+    background: #07535d;
+}
+
+.randomize-button {
+    float: left;
+    background: #07535d;
+
+}
+
+.form-save-button {
+    background: #07535d;
+}
+
+/* USER GAME MANAGER BUTTONS END */

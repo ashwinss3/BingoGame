@@ -128,12 +128,14 @@ def manage_user_game(request, game_id):
             user_game_form = UserGameChoicesForm(instance=user_game_choice, game=user_game.game)
 
         game_options = GameOptions.objects.filter(game=user_game.game).exclude(name='FREE SPACE')
+        game_option_ids = [option.id for option in game_options]
 
         context = {
             'form': user_game_form,
             'game_size': user_game.game.size,
             'saved': saved,
             'game_options': game_options,
+            'game_option_ids': game_option_ids,
             'game_name': user_game.game.name,
             'is_active': user_game.game.is_active
         }
