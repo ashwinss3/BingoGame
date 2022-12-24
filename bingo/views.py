@@ -38,7 +38,7 @@ class GameDetailView(generic.DetailView):
     template_name = 'game/game_detail.html'
 
 
-class LeagueListView(LoginRequiredMixin, generic.ListView):
+class LeagueListView(generic.ListView):
     model = League
     template_name = 'league/league_list.html'
     paginate_by = 10
