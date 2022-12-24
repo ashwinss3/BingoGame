@@ -120,7 +120,8 @@ def manage_user_game(request, game_id):
                 saved = True
                 # TODO: temporary. Allow users to join the league they want.
                 for league in League.objects.all():
-                    LeagueStandings.objects.get_or_create(league=league, user=request.user, user_name=request.user.username)
+                    LeagueStandings.objects.get_or_create(league=league, user=request.user,
+                                                          defaults=dict(user_name=request.user.username))
                 # uncomment below to redirect to any other page. (redirect to user game detail maybe ?)
                 # return HttpResponseRedirect('/thanks/')
 
