@@ -105,6 +105,12 @@ body {
     background-color: #a2965c;
 }
 
+.list-heading {
+    background-color: #374785;
+    color: white;
+    font-weight: bold;
+}
+
 /*LIST GROUP END*/
 
 

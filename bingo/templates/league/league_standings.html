@@ -4,13 +4,51 @@
     <h1>League Standing</h1>
     {% if leaguestandings_list %}
         <div class="list-group">
+            <div class="list-group-item list-heading">
+                <div class="row ">
+                    <div class="col">
+                        <h5 class="mb-1">Position</h5>
+                    </div>
+                    <div class="col">
+                        <h5 class="mb-1">Player</h5>
+                    </div>
+                    <div class="col">
+                        <h5 class="mb-1">Score</h5>
+                    </div>
+                </div>
+            </div>
+
+            {% if current_user_standing %}
+                <a href="{% url 'user-game-view-other' game_id=last_game_id user_id=current_user_standing.user_id %}" class="list-group-item list-group-item-action" style="background: #2b3b70;">
+                    <div class="row">
+                        <div class="col">
+                            <p class="mb-1">{{ current_user_standing.position }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="mb-1"> {{ current_user_standing.user_name }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="mb-1"> {{ current_user_standing.score }}</p>
+                        </div>
+                    </div>
+                </a>
+            {% endif %}
+
             {% for standing in leaguestandings_list %}
                 <a href="{% url 'user-game-view-other' game_id=last_game_id user_id=standing.user_id %}" class="list-group-item list-group-item-action">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">{{ standing.user_name }}</h5>
+                    <div class="row">
+                        <div class="col">
+                            <p class="mb-1">{{ standing.position }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="mb-1"> {{ standing.user_name }}</p>
+                        </div>
+                        <div class="col">
+                            <p class="mb-1"> {{ standing.score }}</p>
+                        </div>
                     </div>
-                    <p class="mb-1">{{ standing.score }}</p>
                 </a>
+
             {% endfor %}
         </div>
     {% else %}
