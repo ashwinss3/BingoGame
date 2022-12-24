@@ -60,6 +60,10 @@ class LeagueStandingView(generic.ListView):
         # context['last_game_id'] = League.objects.get(self.kwargs['league_id']).games.\
         #     filter(end_time__lte=timezone.now()).order_by('-end_time').first().id
         context['last_game_id'] = Game.objects.filter(end_time__lte=timezone.now()).order_by('-end_time').first().id
+        if self.request.user.is_authenticated:
+            context['current_user_standing'] = LeagueStandings.objects.filter(league_id=self.kwargs['league_id'],
+                                                                              user=self.request.user).first()
+
         return context
 
 
@@ -120,7 +124,8 @@ def manage_user_game(request, game_id):
                 saved = True
                 # TODO: temporary. Allow users to join the league they want.
                 for league in League.objects.all():
-                    LeagueStandings.objects.get_or_create(league=league, user=request.user, user_name=request.user.username)
+                    LeagueStandings.objects.get_or_create(league=league, user=request.user,
+                                                          defaults=dict(user_name=request.user.username))
                 # uncomment below to redirect to any other page. (redirect to user game detail maybe ?)
                 # return HttpResponseRedirect('/thanks/')
 
@@ -128,12 +133,14 @@ def manage_user_game(request, game_id):
             user_game_form = UserGameChoicesForm(instance=user_game_choice, game=user_game.game)
 
         game_options = GameOptions.objects.filter(game=user_game.game).exclude(name='FREE SPACE')
+        game_option_ids = [option.id for option in game_options]
 
         context = {
             'form': user_game_form,
             'game_size': user_game.game.size,
             'saved': saved,
             'game_options': game_options,
+            'game_option_ids': game_option_ids,
             'game_name': user_game.game.name,
             'is_active': user_game.game.is_active
         }
