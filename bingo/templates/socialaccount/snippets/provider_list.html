@@ -1,0 +1,34 @@
+{% load socialaccount %}
+
+{% get_providers as socialaccount_providers %}
+<div class="text-center mb-3">
+    <p>Sign in with:</p>
+
+    {% for provider in socialaccount_providers %}
+        {% if provider.id == "openid" %}
+            {% for brand in provider.get_brands %}
+                <li>
+                    <a title="{{brand.name}}"
+                       class="socialaccount_provider {{provider.id}} {{brand.id}}"
+                       href="{% provider_login_url provider.id openid=brand.openid_url process=process %}"
+                    >{{brand.name}}</a>
+                </li>
+            {% endfor %}
+        {% endif %}
+        {% if provider.name|lower == "reddit" %}
+            <button type="button" class="btn btn-link btn-floating mx-1">
+                <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}"
+                   href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+                    <i class="fa-lg fa-brands fa-reddit-alien"></i>
+                </a>
+            </button>
+        {% else %}
+
+
+            <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}"
+               href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">{{ provider.name }}</a>
+        {% endif %}
+    {% endfor %}
+
+</div>
+
