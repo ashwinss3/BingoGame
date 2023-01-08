@@ -1,0 +1,63 @@
+{% extends "generic/base_generic.html" %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+    <h1>{% trans "Sign Up" %}</h1>
+    <hr class="mx-n3">
+
+    {% get_providers as socialaccount_providers %}
+
+    {% if socialaccount_providers %}
+        <div class="socialaccount_ballot">
+            <div class="socialaccount_providers">
+                {% include "socialaccount/snippets/provider_list.html" with process="login" current_page="Sign Up"%}
+            </div>
+            <p class="text-center">Or</p>
+        </div>
+        {% include "socialaccount/snippets/login_extra.html" %}
+    {% endif %}
+
+    <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+        {% for non_field_error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ non_field_error }}</strong>
+            </div>
+        {% endfor %}
+
+        {% for field in form %}
+            <div class="row align-items-center pt-4 pb-3">
+                <div class="col-md-3 ps-5">
+                    <h6 class="mb-0">{{ field.label }} </h6>
+                </div>
+                <div class="col-md-9 pe-5">
+                    {% for error in field.errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error }}</strong>
+                        </div>
+                    {% endfor %}
+
+                    {{ field }}
+
+                    {% if not field.field.required %}
+                        <div class="small text-muted mt-2">(Optional)</div>
+                    {% endif %}
+
+                    <div class="small text-muted mt-2">{{ field.help_text }}</div>
+                </div>
+            </div>
+            <hr class="mx-n3">
+
+        {% endfor %}
+        {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <button class="btn btn-primary btn-block mb-4" type="submit">{% trans "Sign Up" %} &raquo;</button>
+    </form>
+    <p>Already have an account? Then please <a href="{% url 'account_login' %}">Sign In</a>.</p>
+
+{% endblock %}
