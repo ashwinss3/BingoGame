@@ -20,7 +20,7 @@ from bingo.utils.utils import get_user_choices_list, validate_game_end
 
 
 class SignUpView(SuccessMessageMixin, CreateView):
-    template_name = 'registration/signup.html'
+    template_name = 'account/signup.html'
     success_url = reverse_lazy('login')
     form_class = UserSignupForm
     success_message = "Your profile was created successfully"

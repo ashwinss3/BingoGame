@@ -2,7 +2,7 @@
 
 {% get_providers as socialaccount_providers %}
 <div class="text-center mb-3">
-    <p>Sign in with:</p>
+    <p>{{ current_page }} with:</p>
 
     {% for provider in socialaccount_providers %}
         {% if provider.id == "openid" %}

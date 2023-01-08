@@ -8,6 +8,8 @@
 {% block content %}
     <div class="col-sm-6 mx-auto">
         <h1 class="text-center">{% trans "Sign In" %}</h1>
+        <hr class="mx-n3">
+
 
         {% get_providers as socialaccount_providers %}
 
@@ -16,10 +18,10 @@
             <div class="socialaccount_ballot">
 
                 <div class="socialaccount_providers">
-                    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+                    {% include "socialaccount/snippets/provider_list.html" with process="login" current_page="Sign In"%}
                 </div>
 
-                <p class="text-center">or:</p>
+                <p class="text-center">Or:</p>
 
             </div>
 
