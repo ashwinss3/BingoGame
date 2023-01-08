@@ -170,3 +170,7 @@ SOCIALACCOUNT_PROVIDERS = {
         'USER_AGENT': 'django:lets.bingo.game:1.0 (by /u/ezvine)',
     }
 }
+
+# used in generating callback url for reddit
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+
