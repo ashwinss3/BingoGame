@@ -21,7 +21,7 @@
                 <span>{{ game_name }}</span>
                 <span>{{ game_name }}</span>
             </div>
-            <div class="bingo-card" style="grid-template-columns: repeat({{ game_size }}, minmax(0,150px)); grid-template-rows: repeat({{ game_size }}, minmax(0,150px))">
+            <div class="bingo-card" style="grid-template-columns: repeat({{ game_size }}, minmax(0,20vw)); grid-template-rows: repeat({{ game_size }}, minmax(0,20vw))">
                 {% for field in form %}
                     {#                                {{ field.errors }}#}
                     {#                                {{ field.label_tag }}#}

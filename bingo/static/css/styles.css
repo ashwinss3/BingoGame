@@ -148,6 +148,8 @@ body {
     /* For Firefox: */
     text-overflow: ellipsis;
     overflow:hidden;
+    aspect-ratio: 1;
+
 }
 
 .bingo-card__item__error {
