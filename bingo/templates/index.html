@@ -21,7 +21,9 @@
                     <div class="d-flex w-100 justify-content-between">
                         <h5 class="mb-1">{{ game.name }}</h5>
                     </div>
-                    <p class="mb-1">Deadline (IST): {{ game.end_time }}</p>
+                    <p class="mb-1">Deadline (GMT): {{ game.end_time }}</p>
+                    <div id="countdown-timer-{{ forloop.counter0 }}"></div>
+
                 </a>
 
             {% endfor %}
@@ -39,4 +41,39 @@
     <hr class="mb-0 mb-4">
 
     {#    BELOW TO SHOW PREVIOUS GAMES  #}
+
+    <script>
+        // Get the server timezone from the Django template
+        var serverTimezone = "{{ server_timezone }}";
+
+        // Set an interval to update the countdown timers every second
+        {% for game in active_games %}
+            // Parse the time left string to get a Date object in the server timezone
+            var endDate = new Date('{{ game.end_time|date:"c" }}');
+            // Get the current date and time in the client's timezone
+            var currentDate = new Date();
+            // Calculate the time left in seconds
+            var timeLeft = Math.round((endDate - currentDate) / 1000);
+            // Set an interval to update the countdown timer
+            var interval = setInterval(function() {
+                // Calculate the days, hours, minutes, and seconds left
+                var days = Math.floor(timeLeft / (60 * 60 * 24));
+                var hours = Math.floor((timeLeft % (60 * 60 * 24)) / (60 * 60));
+                var minutes = Math.floor((timeLeft % (60 * 60)) / (60));
+                var seconds = Math.floor((timeLeft % (60)));
+
+                // Update the countdown timer element
+                document.getElementById("countdown-timer-{{ forloop.counter0 }}").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+                // Decrement the time left by one second
+                timeLeft -= 1;
+
+                // If the time left is less than 0, clear the interval
+                if (timeLeft < 0) {
+                    clearInterval(interval);
+                }
+            }, 1000);
+        {% endfor %}
+
+    </script>
 {% endblock %}
