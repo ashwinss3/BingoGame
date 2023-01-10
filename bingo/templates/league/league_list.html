@@ -1,7 +1,7 @@
 {% extends "generic/base_generic.html" %}
 
 {% block content %}
-    <h1>Leagues</h1>
+    <h1>{% if request.GET.is_active == 'false' %}Inactive{% endif %} Leagues</h1>
     {% if league_list %}
         <div class="list-group">
 
