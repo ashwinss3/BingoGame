@@ -15,6 +15,16 @@
             {% endfor %}
         </div>
     {% else %}
-        <p>Oops. There are no leagues active now.</p>
+        <p>Oops. There are no leagues available now.</p>
     {% endif %}
+
+    <hr class="mb-16">
+
+    <div>
+        {% if request.GET.is_active != 'false' %}
+            <a href="{% url 'leagues' %}?is_active=false" class="lead">View Old Leagues</a>
+        {%  else %}
+            <a href="{% url 'leagues' %}" class="lead">View Active Leagues</a>
+        {% endif %}
+    </div>
 {% endblock %}

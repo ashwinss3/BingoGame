@@ -44,6 +44,16 @@ class LeagueListView(generic.ListView):
     paginate_by = 10
     ordering = ['-created_at']
 
+    def get_queryset(self):
+        params = {}
+        if self.request.GET.get('is_active') == 'false':
+            params['is_active'] = False
+        else:
+            params['is_active'] = True
+
+        return League.objects.filter(**params)
+
+
 
 class LeagueStandingView(generic.ListView):
     model = LeagueStandings

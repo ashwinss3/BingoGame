@@ -72,6 +72,7 @@ class League(BaseModel):
     id = models.AutoField(primary_key=True)
     name = models.TextField()
     games = models.ManyToManyField(Game)
+    is_active = models.BooleanField(default=True)
 
     def get_absolute_url(self):
         """Returns the URL to access a particular instance of MyModelName."""
