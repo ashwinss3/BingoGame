@@ -29,6 +29,7 @@ class Game(BaseModel):
     name = models.TextField()
     end_time = models.DateTimeField()
     size = models.PositiveSmallIntegerField(default=5, choices=SIZE_CHOICES)
+    main_league = models.ForeignKey('League', null=True, on_delete=models.PROTECT)
 
     @property
     def is_active(self):

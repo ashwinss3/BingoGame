@@ -115,7 +115,7 @@ def how_to_play(request):
 @login_required
 def manage_user_game(request, game_id):
     try:
-        validate_game_end(game_id, deny_inactive=True)
+        game_obj = validate_game_end(game_id, deny_inactive=True)
 
         user_game, ug_created = UserGame.objects.get_or_create(user=request.user, game_id=game_id)
         user_game_choice, c_created = UserGameChoices.objects.get_or_create(user_game=user_game)
@@ -125,7 +125,7 @@ def manage_user_game(request, game_id):
         # if this is a POST request we need to process the form data
         if request.method == 'POST':
             # create a form instance and populate it with data from the request:
-            user_game_form = UserGameChoicesForm(request.POST, instance=user_game_choice, game=user_game.game)
+            user_game_form = UserGameChoicesForm(request.POST, instance=user_game_choice, game=game_obj)
 
             # check whether it's valid:
             if user_game_form.is_valid():
@@ -133,9 +133,14 @@ def manage_user_game(request, game_id):
                 user_game_form.save(commit=True)
                 saved = True
                 # TODO: temporary. Allow users to join the league they want.
-                for league in League.objects.filter(is_active=True):
-                    LeagueStandings.objects.get_or_create(league=league, user=request.user,
-                                                          defaults=dict(user_name=request.user.username))
+                # for league in League.objects.filter(is_active=True):
+                #     LeagueStandings.objects.get_or_create(league=league, user=request.user,
+                #                                           defaults=dict(user_name=request.user.username))
+
+                # added to handle multiple games running at same time. THis is to join the main league.
+                LeagueStandings.objects.get_or_create(league=game_obj.main_league, user=request.user,
+                                                      defaults=dict(user_name=request.user.username))
+
                 # uncomment below to redirect to any other page. (redirect to user game detail maybe ?)
                 # return HttpResponseRedirect('/thanks/')
 
