@@ -72,7 +72,7 @@ class League(BaseModel):
 
     id = models.AutoField(primary_key=True)
     name = models.TextField()
-    games = models.ManyToManyField(Game)
+    games = models.ManyToManyField(Game, blank=True)
     is_active = models.BooleanField(default=True)
 
     def get_absolute_url(self):
