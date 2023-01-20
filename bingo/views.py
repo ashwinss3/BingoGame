@@ -69,7 +69,10 @@ class LeagueStandingView(generic.ListView):
         # todo: check this later. Not using the league games field.
         # context['last_game_id'] = League.objects.get(self.kwargs['league_id']).games.\
         #     filter(end_time__lte=timezone.now()).order_by('-end_time').first().id
-        context['last_game_id'] = Game.objects.filter(end_time__lte=timezone.now()).order_by('-end_time').first().id
+        last_game = Game.objects.filter(main_league_id=self.kwargs['league_id'],
+                                        end_time__lte=timezone.now()).order_by('-end_time').first()
+        if last_game:
+            context['last_game_id'] = last_game.id
         if self.request.user.is_authenticated:
             context['current_user_standing'] = LeagueStandings.objects.filter(league_id=self.kwargs['league_id'],
                                                                               user=self.request.user).first()
