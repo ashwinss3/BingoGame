@@ -178,6 +178,9 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+SOCIALACCOUNT_FORMS = {'signup': 'bingo.forms.registration.CustomSocialSignupForm'}
+SOCIALACCOUNT_AUTO_SIGNUP = False
+
 # used in generating callback url for reddit
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 
