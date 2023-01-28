@@ -1,4 +1,5 @@
-from django.db.models import Subquery, OuterRef, F
+from django.db.models import Subquery, OuterRef, F, Value
+from django.db.models.functions import Coalesce
 
 from bingo.models import UserGameChoices, UserGame, LeagueStandings
 from bingo.utils.utils import validate_game_end
@@ -101,7 +102,9 @@ def update_league_standing_for_user_game(game_id, league_id):
     score_subquery = Subquery(
         UserGame.objects.filter(user_id=OuterRef('user_id'), game_id=game_id).values('score')
     )
-    LeagueStandings.objects.filter(league_id=league_id).update(score=F('score') + score_subquery)
+    # LeagueStandings.objects.filter(league_id=league_id).update(score=F('score') + score_subquery)
+    LeagueStandings.objects.filter(league_id=league_id).update(score=Coalesce(F('score') + score_subquery, Value(0)))
+
 
 
 def update_league_standing_positions(league_id, update_prev_position=True):
