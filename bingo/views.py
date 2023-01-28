@@ -69,10 +69,10 @@ class LeagueStandingView(generic.ListView):
         # todo: check this later. Not using the league games field.
         # context['last_game_id'] = League.objects.get(self.kwargs['league_id']).games.\
         #     filter(end_time__lte=timezone.now()).order_by('-end_time').first().id
-        last_game = Game.objects.filter(main_league_id=self.kwargs['league_id'],
-                                        end_time__lte=timezone.now()).order_by('-end_time').first()
-        if last_game:
-            context['last_game_id'] = last_game.id
+        # last_game = Game.objects.filter(main_league_id=self.kwargs['league_id'],
+        #                                 end_time__lte=timezone.now()).order_by('-end_time').first()
+
+        context['league_id'] = self.kwargs['league_id']
         if self.request.user.is_authenticated:
             context['current_user_standing'] = LeagueStandings.objects.filter(league_id=self.kwargs['league_id'],
                                                                               user=self.request.user).first()
@@ -180,22 +180,41 @@ def view_user_game(request, game_id, user_id=None):
 
     user_name = User.objects.get(id=user_id).username
     user_game = UserGame.objects.get(user_id=user_id, game_id=game_id)
-    user_game_choices = user_game.usergamechoices
-    game_size = user_game.game.size
-    game_name = user_game.game.name
-    game_options = GameOptions.objects.filter(game=user_game.game).order_by('-is_done')
-    user_choice_list = get_user_choices_list(user_game_choices, game_size)
-
+    user_game_details = utils.get_user_game_details(user_game)
     context = {
         'user_name': user_name,
-        'game_size': game_size,
-        'game_name': game_name,
         'score': user_game.score,
-        'user_choice_list': user_choice_list,
-        'game_options': game_options
     }
+    context.update(user_game_details)
     return render(request, 'game/user_game_detail.html', context=context)
 
+def view_user_last_game(request, league_id, user_id):
+    """
+    function to view the user's last game of the mentioned league
+    """
+    try:
+
+        # this function was created as an alternative to view_user_game when opened from league standings
+        if not user_id:
+            user_id = request.user.id
+
+        user_name = User.objects.get(id=user_id).username
+        user_game = UserGame.objects.filter(user_id=user_id, game__main_league_id=league_id,
+                                            game__end_time__lt=timezone.now()).order_by('-game__end_time').first()
+
+        if not user_game:
+            return render(request, 'game/user_game_not_found.html')
+
+        user_game_details = utils.get_user_game_details(user_game)
+        context = {
+            'user_name': user_name,
+            'score': user_game.score,
+        }
+        context.update(user_game_details)
+        return render(request, 'game/user_game_detail.html', context=context)
+    except Exception:
+        traceback.print_exc()
+        return render(request, 'game/user_game_not_found.html')
 
 def game(request):
     # if this is a POST request we need to process the form data

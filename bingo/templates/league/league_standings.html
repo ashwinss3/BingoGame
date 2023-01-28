@@ -19,7 +19,7 @@
             </div>
 
             {% if current_user_standing %}
-                <a href="{% if last_game_id %}{% url 'user-game-view-other' game_id=last_game_id user_id=current_user_standing.user_id %}{% endif %}" class="list-group-item list-group-item-action" style="background: #2b3b70;">
+                <a href="{% url 'view-user-last-game' league_id=league_id user_id=current_user_standing.user_id %}" class="list-group-item list-group-item-action" style="background: #2b3b70;">
                     <div class="row">
                         <div class="col">
                             <p class="mb-1">{{ current_user_standing.position }}</p>
@@ -35,7 +35,7 @@
             {% endif %}
 
             {% for standing in leaguestandings_list %}
-                <a href="{% if last_game_id %}{% url 'user-game-view-other' game_id=last_game_id user_id=standing.user_id %}{% endif %}" class="list-group-item list-group-item-action">
+                <a href="{% url 'view-user-last-game' league_id=league_id user_id=standing.user_id %}" class="list-group-item list-group-item-action">
                     <div class="row">
                         <div class="col">
                             <p class="mb-1">{{ standing.position }}</p>

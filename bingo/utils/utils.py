@@ -25,3 +25,22 @@ def validate_game_end(game_id, deny_active=False, deny_inactive=False):
         raise PermissionError('Game deadline finished :)')
 
     return game_obj
+
+
+# [ GAME UTILS ]
+
+def get_user_game_details(user_game):
+    user_game_details = {}
+    from bingo.models import GameOptions
+
+    user_game_choices = user_game.usergamechoices
+    game_size = user_game.game.size
+    user_game_details['game_size'] = game_size
+    user_game_details['game_name'] = user_game.game.name
+    user_game_details['game_options'] = GameOptions.objects.filter(game=user_game.game).order_by('-is_done')
+    user_game_details['user_choice_list'] = get_user_choices_list(user_game_choices, game_size)
+
+    return user_game_details
+
+
+
