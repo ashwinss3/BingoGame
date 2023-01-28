@@ -1,0 +1,57 @@
+{% extends "generic/base_generic.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+    <h1>{% trans "Sign Up" %}</h1>
+    <hr class="mx-n3">
+
+
+    <p>{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are about to use your {{provider_name}} account to login to
+        {{site_name}}. As a final step, please complete the following form:{% endblocktrans %}</p>
+
+        <p style="color: darkred">*Username cannot be changed once created.</p>
+
+    <form class="signup" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
+        {% csrf_token %}
+        {% for non_field_error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ non_field_error }}</strong>
+            </div>
+        {% endfor %}
+
+        {% for field in form %}
+            <div class="row align-items-center pt-4 pb-3">
+
+            <div class="col-md-3 ps-5">
+                <h6 class="mb-0">{{ field.label }} </h6>
+            </div>
+            <div class="col-md-9 pe-5">
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error }}</strong>
+                    </div>
+                {% endfor %}
+
+                {{ field }}
+
+                {% if not field.field.required %}
+                    <div class="small text-muted mt-2">(Optional)</div>
+                {% endif %}
+                <div class="small text-muted mt-2">{{ field.help_text }}</div>
+
+            </div>
+            </div>
+
+        {% endfor %}
+
+        {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+
+        <button class="btn btn-primary btn-block mb-4" type="submit">{% trans "Sign Up" %} &raquo;</button>
+    </form>
+
+{% endblock %}
