@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.reddit',
-
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -168,6 +168,13 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUTH_PARAMS': {'duration': 'permanent'},
         'SCOPE': ['identity'],
         'USER_AGENT': 'django:lets.bingo.game:1.0 (by /u/ezvine)',
+    },
+    'google': {
+        'SCOPE': ['profile'],  # add 'email' if required
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'OAUTH_PKCE_ENABLED': True,
     }
 }
 

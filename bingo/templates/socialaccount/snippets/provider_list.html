@@ -22,6 +22,13 @@
                     <i class="fa-lg fa-brands fa-reddit-alien"></i>
                 </a>
             </button>
+        {% elif provider.name|lower == "google" %}
+            <button type="button" class="btn btn-link btn-floating mx-1">
+                <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}"
+                   href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+                    <i class="fa-brands fa-google"></i>
+                </a>
+            </button>
         {% else %}
 
 
