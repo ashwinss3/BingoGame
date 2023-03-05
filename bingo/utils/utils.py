@@ -43,4 +43,17 @@ def get_user_game_details(user_game):
     return user_game_details
 
 
+def get_user_game_style_data(game_size):
+    # change this function to a class later maybe ?
+    # GAME SIZE -> BINGO CARD STYLE DATA MAP
+    style_data_map = {
+        'default': {
+            'grid_gap': '4px'
+        },
+        3: {
+            'grid_gap': '15px'
+        }
+    }
+    return style_data_map.get(game_size, style_data_map['default'])
+
 

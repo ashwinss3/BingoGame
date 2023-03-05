@@ -160,7 +160,8 @@ def manage_user_game(request, game_id):
             'game_options': game_options,
             'game_option_ids': game_option_ids,
             'game_name': user_game.game.name,
-            'is_active': user_game.game.is_active
+            'is_active': user_game.game.is_active,
+            'style_data': utils.get_user_game_style_data(user_game.game.size)
         }
 
         return render(request, 'user_game/user_game_create.html', context)
