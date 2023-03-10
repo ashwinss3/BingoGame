@@ -301,7 +301,10 @@ body {
 
 .add-on-buttons {
     overflow: auto;
-    padding: 2%;
+    padding-bottom: 2%;
+    padding-top: 2%;
+    margin: 0 auto;
+    max-width: 600px;
 }
 
 .clear-button {
