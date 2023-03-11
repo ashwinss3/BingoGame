@@ -48,12 +48,17 @@ def get_user_game_style_data(game_size):
     # GAME SIZE -> BINGO CARD STYLE DATA MAP
     style_data_map = {
         'default': {
-            'grid_gap': '4px'
-        },
+            'grid_gap': '4px',
+            'column_gap': '5em',
+            'column_max_width': '50em'
+
+    },
         3: {
-            'grid_gap': '15px'
+            'grid_gap': '15px',
+            'column_gap': '10em',
+            'column_max_width': '30em'
         }
     }
-    return style_data_map.get(game_size, style_data_map['default'])
+    return style_data_map.get(int(game_size), style_data_map['default'])
 
 
