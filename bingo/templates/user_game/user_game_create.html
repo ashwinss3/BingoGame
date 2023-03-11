@@ -1,17 +1,22 @@
 {% extends "generic/base_generic.html" %}
 
 {% block colcontent %}
-    <div class="col-sm-12">
-        <form action="" method="post">
-            {% if saved %}
-                <p><b>Saved Successfully !!</b></p>
-            {% endif %}
+    <div class="col-sm-12" style="column-gap: {{ style_data.column_gap }}">
+        <form action="" method="post" style="max-width: {{ style_data.column_max_width }}">
+{#            {% if saved %}#}
+{#                <p><b>Saved Successfully !!</b></p>#}
+{#            {% endif %}#}
 
             {% csrf_token %}
             <div class="errors">
                 {{ form.non_field_errors }}
             </div>
             <div class="add-on-buttons">
+            {#      Move these to outside of the button div  #}
+                {% if saved %}
+                    <p><b>Saved Successfully !!</b></p>
+                {% endif %}
+
                 <button type="button" class="btn btn-primary randomize-button" onclick="fillRandomOption();"> Fill Random</button>
                 <button type="button" class="btn btn-primary clear-button" onclick="clearOptions();"> Clear</button>
             </div>
@@ -21,8 +26,8 @@
                 <span>{{ game_name }}</span>
                 <span>{{ game_name }}</span>
             </div>
-            <div class="bingo-card" style="grid-template-columns: repeat({{ game_size }}, minmax(0,20vw));
-                    grid-template-rows: repeat({{ game_size }}, minmax(0,20vw)); grid-gap: {{ style_data.grid_gap }}">
+            <div class="bingo-card" style="grid-template-columns: repeat({{ game_size }}, minmax(0,30vw));
+                    grid-template-rows: repeat({{ game_size }}, minmax(0,30vw)); grid-gap: {{ style_data.grid_gap }}">
                 {% for field in form %}
                     {#                                {{ field.errors }}#}
                     {#                                {{ field.label_tag }}#}
@@ -42,7 +47,7 @@
         </form>
         {# SHOWING THE OPTIONS BELOW  #}
 
-        <div class="scroll-box list-group">
+        <div class="scroll-box list-group" style="max-width: {{ style_data.column_max_width }}">
             <h2> OPTIONS DETAILED <small><small>(Click to Select)</small></small></h2>
             {% for option in game_options %}
                 <a id="opt_{{ option.id }}" href="javascript:void(0)" class="list-group-item list-group-item-action game-option" aria-current="true"  onclick="selectOption(this, {{ option.id }});">

@@ -118,7 +118,7 @@ body {
 
 .bingo-card {
     background: #e6dda8;
-    padding: 20px;
+    padding: 1em;
     display: grid;
     grid-gap: 4px;
     justify-content: center;

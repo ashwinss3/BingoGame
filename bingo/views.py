@@ -174,7 +174,7 @@ def view_user_game(request, game_id, user_id=None):
     """
     function to view the user game.
     """
-    validate_game_end(game_id, deny_active=True)
+    game = validate_game_end(game_id, deny_active=True)
 
     if not user_id:
         user_id = request.user.id
@@ -185,6 +185,7 @@ def view_user_game(request, game_id, user_id=None):
     context = {
         'user_name': user_name,
         'score': user_game.score,
+        'style_data': utils.get_user_game_style_data(game.size)
     }
     context.update(user_game_details)
     return render(request, 'game/user_game_detail.html', context=context)
@@ -210,6 +211,7 @@ def view_user_last_game(request, league_id, user_id):
         context = {
             'user_name': user_name,
             'score': user_game.score,
+            'style_data': utils.get_user_game_style_data(user_game_details['game_size'])
         }
         context.update(user_game_details)
         return render(request, 'game/user_game_detail.html', context=context)
