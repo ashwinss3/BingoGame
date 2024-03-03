@@ -23,6 +23,7 @@ Models:
 Choices can be stored in a single array.Calculation can be done based by using formula based on positions
 
 
+<!---
 Sep 18:
 
 Added user, Game List page, Game Details page, 
@@ -78,3 +79,4 @@ Host postgres
 Post game deadline, dont allow to save, and dont allow to change choices in UI as well
 
 Create a countdown 
+-->
