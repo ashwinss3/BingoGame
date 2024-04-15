@@ -93,6 +93,18 @@ and to play, players can create their cards using these custom options.
 NOTE: Pycharm run configuration is already present in the project. 
 The same can be used to run the project directly on local, after adding environment variable and necessary migrations.
 
+
+## Contributing
+Contributions are welcome! If you'd like to improve this Bingo game or add new features, feel free to fork the repository and submit a pull request.
+
+Note: Feel free to update the designs. HTML/CSS weren't my strong areas. :)
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
+
+
+
 ***
 # LET'S PLAY !!!
 ***
