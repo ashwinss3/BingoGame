@@ -1,6 +1,5 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from django.forms import BaseInlineFormSet
 
 from bingo import config
 from bingo.models import Game, UserGameChoices, GameOptions

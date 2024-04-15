@@ -16,7 +16,7 @@ from bingo.utils import utils
 
 from django.views.generic.edit import CreateView
 
-from bingo.utils.utils import get_user_choices_list, validate_game_end
+from bingo.utils.utils import validate_game_end
 
 
 class SignUpView(SuccessMessageMixin, CreateView):
@@ -52,7 +52,6 @@ class LeagueListView(generic.ListView):
             params['is_active'] = True
 
         return League.objects.filter(**params)
-
 
 
 class LeagueStandingView(generic.ListView):
@@ -174,7 +173,7 @@ def view_user_game(request, game_id, user_id=None):
     """
     function to view the user game.
     """
-    game = validate_game_end(game_id, deny_active=True)
+    game_obj = validate_game_end(game_id, deny_active=True)
 
     if not user_id:
         user_id = request.user.id
@@ -185,10 +184,11 @@ def view_user_game(request, game_id, user_id=None):
     context = {
         'user_name': user_name,
         'score': user_game.score,
-        'style_data': utils.get_user_game_style_data(game.size)
+        'style_data': utils.get_user_game_style_data(game_obj.size)
     }
     context.update(user_game_details)
     return render(request, 'game/user_game_detail.html', context=context)
+
 
 def view_user_last_game(request, league_id, user_id):
     """
@@ -218,6 +218,7 @@ def view_user_last_game(request, league_id, user_id):
     except Exception:
         traceback.print_exc()
         return render(request, 'game/user_game_not_found.html')
+
 
 def game(request):
     # if this is a POST request we need to process the form data
